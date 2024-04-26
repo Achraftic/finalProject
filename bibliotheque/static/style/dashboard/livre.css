@@ -1,0 +1,73 @@
+
+/* table */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+ 
+    margin: auto;
+    border: 1px solid #dddddd5b;
+    margin-top: 20px;
+    text-transform: capitalize;
+  }
+  
+  th, td {
+    text-align: left;
+    padding: 15px;
+    font-size: 14px;
+  }
+  
+  tr:nth-child(even){background-color: #e4e4e442}
+
+
+.action{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    margin: 11px 0;
+
+width: max-content;
+    height: 100%;
+    
+}
+.etat{
+    padding: 10px;
+    
+
+}
+.etat span{
+    
+   width: 20px;
+   padding: 4px 10px;
+    font-size: smaller;
+    border-radius: 100px;
+    color: aliceblue;
+    font-weight: bold;
+}
+.etat span.true{
+    background-color: rgba(13, 198, 53, 0.461);
+}
+.etat span.false{
+    background-color: rgba(255, 74, 74, 0.461);
+}
+.btndash{
+    margin: 10px 0;
+
+}
+.btndash a{
+    background-color: var(--blue);
+    padding: 8px 13px;
+    color: var(--white);
+    border-radius: 100px;
+    font-size: 14px;
+    text-transform: capitalize;
+}
+.imglivre img{
+    width: 30px;
+}
+
+
+
+/* toggle */
+/* Genel stil */

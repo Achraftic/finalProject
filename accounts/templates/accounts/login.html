@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+    <link rel="stylesheet" href="{% static 'style/form.css' %}">
+    <link rel="stylesheet" href="{% static 'style/global.css' %}">
+    
+<div class="parentform">
+    <div class="containerform">
+        <form method="post" action="{% url 'login' %}">
+            {% if error %}<center style="color:red">{{error}}</center>{% endif %}
+            {% csrf_token %}
+            <h1>connexion</h1>
+
+            <input type="text" name="username"  class="email inputform" placeholder="email">
+            <input type="password" name="password" class="password inputform" placeholder="password">
+            <a>forget password</a>
+            <button class="btnform">Se Connecter</button>
+        </form>
+        <div class="imgcontainer">
+            <img src="{% static 'img/3afb3c491fbec34c7419f1264faf414b.jpg' %}" alt="">
+        </div>
+    </div>
+
+</div>
+{% endblock %}

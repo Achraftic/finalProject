@@ -1,0 +1,158 @@
+@import './color.css';
+
+input {
+    width: 300px;
+    padding: 10px;
+    background-color: transparent;
+    border: 1px solid var(--white);
+    color: var(--white);
+    outline: none;
+    border-radius: 5px;
+}
+
+input:focus {
+    border: 1px solid var(--blue);
+}
+
+button {
+    width: max-content;
+    padding: 10px 10px;
+    background-color: var(--blue);
+    color: var(--white);
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border:1px solid transparent;
+}
+
+.containerform {
+
+    width: 800px;
+    max-width: 1200px;
+    display: flex;
+    height: 70vh;
+    justify-content: space-between;
+    border-radius: 10px;
+    overflow: hidden;
+    
+
+
+}
+
+.containerform img {
+    height: 100%;
+    width: 200px;
+    object-fit: cover;
+    object-position: center ;
+
+}
+
+.containerform form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px;
+    gap: 17px;
+    background-color: var(--black);
+
+}
+
+.parentform {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding: 15px;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(to left bottom, #eeeeee, #e5eaf5, #d1eafb, #b7eaf9, #a0ebeb);
+}
+
+.containerform form {
+    width: 100%;
+    border: 1px solid;
+}
+
+.imgcontainer img {
+    width: 100%;
+    min-width: 300px;
+
+}
+
+.imgcontainer {
+    width: 100%;
+}
+
+.containerform h1 {
+    color: var(--white);
+    margin-bottom: 10px;
+
+}
+
+.containerform a {
+    color: var(--white);
+    font-size: 10px;
+    opacity: 0.4;
+
+}
+
+.inputNameEmail {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
+    max-width: 300px;
+
+}
+
+.inputNameEmail input {
+    width: 100%;
+}
+button:hover{
+    background-color: var(--darkGray);
+    color: var(--white);
+    transition: all 0.3s ease-in-out;
+    border: 1px solid var(--white);
+
+}
+
+
+
+@media (max-width: 768px) {
+    .imgcontainer {
+        display: none;
+        width: 0;
+        /* Adjust font size for smaller screens */
+    }
+
+    .containerform form {
+        width: 500px;
+        max-width: 600px;
+    }
+
+    .containerform {
+        width: max-content;
+    }
+    .inputNameEmail {
+        max-width: 100%;
+    }
+
+    input {
+        width: 100%;
+        padding: 11px;
+
+    }
+
+    button {
+        padding: 11px;
+    }
+}
+
+/* Media query for devices with a maximum width of 480px */
+@media (max-width: 480px) {
+    .containerform {
+        max-width: 600px;
+
+    }
+
+}

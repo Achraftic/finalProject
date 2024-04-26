@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'style/global.css' %}"/>
+    <link rel="stylesheet" href="{% static 'style/home.css' %}"/>
+    <link rel="stylesheet" href="{% static 'style/fontawesome-free-6.5.2-web/css/all.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'style/unLivre.css' %}"/>
+    <div class="phonenav ">
+       <div class="xmark"> <i class="fa-solid fa-xmark fa-xl"></i></div>
+        <ul class="phonelink">
+            <li>Livres</li>
+            <li>Categories</li>
+            <li>About Us</li>
+            <li>Contact</li>
+         
+         <span>
+            <li class=" form loginnav">Login</li>
+            <li class="form active">Register</li>
+         </span>
+          
+          </ul>
+    </div>
+    <div class="container">
+        {% comment %}
+      <header class="homeHeader">
+        <div class="blur"></div>
+        <nav class="laptopNav">
+          <h1>Logo</h1>
+
+          <ul class="link">
+            <li>Livres</li>
+            <li>Categories</li>
+            <li>About Us</li>
+            <li>Contact</li>
+          </ul>
+          <ul class="formLink">
+            <li class="loginList">Login</li>
+            <li class="loginList active">Register</li>
+          </ul>
+
+          <div class="burger">
+            <i class="fa-solid fa-xl fa-bars-staggered"></i>
+          </div>
+       
+        </nav>
+      </header>
+      {% endcomment %}
+ 
+   
+      <a href="{% url 'home' %}" class="back"> <span><i class="fa-solid fa-angle-left"></i> </span><span>Retour</span></a>
+        <div class="flexContainer">
+        
+
+            <div class="image">
+              <img src="{{livre_detail.image_couverture.url}}" alt="{{livre_detail.titre}}" />
+            </div>
+            <div class="text">
+
+                <div class="blurdiv"></div>
+                <div class="blurdiv2"></div>
+              <h1>{{livre_detail.titre}}</h1>
+              <p>
+                {{livre_detail.description}}
+              </p>
+              <div class="listinfo">
+                <ul class="key">
+                    <li>Auteur </li>
+                    <li>ISBN </li>
+                    <li>Exemplaire </li>
+                    <li>Etat</li>
+                  </ul>
+                  <ul class="value"> 
+                    <li>{{livre_detail.auteur}}</li>
+                    <li> {{livre_detail.isbn}}</li>
+                    <li>{{livre_detail.get_NbrExemple}}</li>
+                    {% if livre_detail.exemplaires_livre.count > 1 %}
+                    <li>Disponible</li>
+                    {% else %}
+                    <li>Non Disponible</li>
+                    {% endif %}
+    
+                  </ul>
+
+              </div>
+              {% if user.is_authenticated %}
+              <!-- type="submit "  onclick="window.dialog.showModal();" -->
+              <button ><a href="{% url 'emprunter_exemplaire' livre_detail.slug %}">Emprunter</a></button>
+              {% else %}
+
+              <button ><a href="{% url 'login' %}">Se connecter</a></button>
+              {% endif %}
+            </div>
+    
+        </div>
+   <!-- Please ❤ this if you like it! - Follow Me https://codepen.io/designfenix -->
+
+<dialog id="dialog">
+	<form class="formEmprunte" action="">
+    <div>
+      <label for="Nom">Nom</label>
+      <input type="text" class="input" placeholder="Nom"  disabled value="Achraf">
+    </div>
+    <div>
+      <label for="Nom">Prenom</label>
+      <input type="text" class="input" placeholder="Nom"  disabled value="Achraf">
+    </div>
+    <div>
+      <label for="Nom">Livre</label>
+      <input type="text" class="input" placeholder="Nom"  disabled value="Nom Livre">
+    </div>
+    <div>
+      <label for="date_retour"> Date de retour Prevue</label>  
+      <input type="date" class="input"  placeholder="date_retour">
+    </div>
+ 
+     
+    
+      <button class="submit">Confirmer</button>
+    </form>
+	<button onclick="window.dialog.close();" aria-label="close" class="x">❌</button>
+</dialog>
+    </div>
+
+
+    <script src="{% static 'js/scripts.js' %}"></script>
+{% endblock  %}

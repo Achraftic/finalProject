@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'style/form.css' %}">
+    <link rel="stylesheet" href="{% static 'style/global.css' %}">
+ <div class="parentform">
+ <div class="containerform">
+    <form method="POST" action="{% url 'signup' %}">
+         {% csrf_token %}
+        <h1>Inscription</h1>
+         <div class="inputNameEmail">
+             <input type="text" name="username"  class="name inputform"  placeholder="username"  required>
+             <input type="email" class="email inputform" name="email" placeholder="email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+             <!-- <input type="file" class="image_user inputform" name="image_user" accept="image/*" placeholder="Image de profil"> -->
+        </div>
+        <input type="password" class="password inputform" name="password" placeholder="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+=\[\]{};:.,<>?|\\]).{8,}" title="Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre, un caractère spécial et avoir une longueur minimale de 8 caractères." required>
+        <input type="password" class="cpassword inputform" name="confirm_password" placeholder="confirmer le  password">
+        <a>forget password</a>
+        <button class="btnform" type="submit" >s'inscrire</button>
+    </form>
+    <div class="imgcontainer">
+        <img src = "{% static 'img/3afb3c491fbec34c7419f1264faf414b.jpg' %}" alt="">
+    </div>
+</div>
+
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'style/global.css' %}" />
+    <link rel="stylesheet" href="{% static 'style/home.css' %}" />
+    <link rel="stylesheet" hhref="{% static 'style/fontawesome-free-6.5.2-web/css/all.min.css' %}" />
+        <div class="content">
+        {% for livre in livres %}
+        <div class="livre">
+            <div class="imgcontainer">
+                <img src="{{livre.image_couverture.url}}" alt="">
+  
+            </div>
+            <div class="info">
+                <h4>{{livre.titre}}</h4>
+
+                <div>
+                    <a href="{% url 'detail_livre'  livre.slug %}" class="btn">Detaile</a>
+                
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+    <script src="{% static 'js/scripts.js'%}"></script>
+{% endblock %}

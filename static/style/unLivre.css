@@ -1,0 +1,203 @@
+@import "./color.css";
+.flexContainer{
+display: flex;
+margin-top: 25px ;
+flex-wrap: wrap;
+align-items: center;
+justify-content: center;
+gap: 20px;
+position: relative;
+color: var(--black);
+}
+
+
+.flexContainer .image{
+    
+   
+width: max-content;
+   
+    display: flex;
+    justify-content: center;
+    
+}
+.flexContainer .image img{
+
+    max-width: 300px;
+    box-shadow: 0 19px 12px 0px rgb(162, 162, 162);
+
+}
+.text{
+ 
+  
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    position: relative;
+    padding: 20px;
+    /* border: 1px solid; */
+}
+.text > h1{
+    font-size: 40px;
+    border: 1px solid;
+    max-width: 500px;
+    
+
+}
+.text > p{
+   line-height: 1.2;
+   max-width: 100%;
+   color: rgba(0, 0, 0, 0.68);
+}
+
+.text button{
+    width: max-content;
+    padding: 10px 16px;
+    background-color: var(--white);
+    color: var(--black);
+    border: none; 
+    border-radius:23px;
+    
+}
+.text .listinfo{
+    display: flex;
+
+}
+.text .key {
+    width: 100%;
+    max-width: 130px;
+    font-weight: bold;
+    
+}
+.text .value{
+    color: rgba(0, 0, 0, 0.68);
+}
+li{
+    margin-top: 10px;
+}
+.back{
+
+    width: max-content;
+    font-size: medium;
+    padding: 4px;
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: var(--darkGrey);
+}
+a{
+    cursor: pointer;
+   
+
+}
+/* Please ❤ this if you like it! */
+/* Follow Me https://codepen.io/designfenix */
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+
+/*Dialog Styles*/
+.input {
+    border: 2px solid transparent;
+    
+    height: 2.5em;
+    padding: 1.3em 1em;
+    outline: none;
+    overflow: hidden;
+    background-color: #F3F3F3;
+    border-radius: 10px;
+    transition: all 0.5s;
+  }
+  .input:hover,
+  .input:focus {
+    border: 2px solid #4A9DEC;
+    box-shadow: 0px 0px 0px 7px rgba(74, 158, 236, 0.062);
+    background-color: white;
+  }
+
+dialog {
+	padding: 1rem 3rem;
+	background: white;
+	max-width: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+	padding-top: 2rem;
+	border-radius: 20px;
+	border: 0;
+	box-shadow: 0 5px 30px 0 rgb(0 0 0 / 10%);
+	animation: fadeIn 1s ease both;
+	&::backdrop {
+		animation: fadeIn 1s ease both;
+		background: rgb(255 255 255 / 40%);
+		z-index: 2;
+		backdrop-filter: blur(5px);
+	}
+	.x {
+		filter: grayscale(1);
+		border: none;
+		background: none;
+		position: absolute;
+		top: 15px;
+		right: 10px;
+		transition: ease filter, transform 0.3s;
+		cursor: pointer;
+		transform-origin: center;
+		&:hover {
+			filter: grayscale(0);
+			transform: scale(1.1);
+		}
+	}
+	h2 {
+		font-weight: 600;
+		font-size: 2rem;
+		padding-bottom: 1rem;
+	}
+	p {
+		font-size: 1rem;
+		line-height: 1.3rem;
+		padding: 0.5rem 0;
+		a {
+			&:visited {
+				color: rgb(var(--vs-primary));
+			}
+		}
+	}
+}
+.formEmprunte{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.formEmprunte div{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+width: 250px;
+}
+ button.submit{
+    padding: 10px 14px ;
+    background-color: var(--blue);
+    color: var(--white);
+    border-radius: 23px ;
+    border: none;
+justify-items: end;
+
+ }
+/*General Styles*/
+
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}

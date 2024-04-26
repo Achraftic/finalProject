@@ -1,0 +1,421 @@
+@import './color.css';
+
+body {
+    background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.container {
+
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+    height: max-content;
+}
+
+.homeHeader {
+    width: 100%;
+    max-width: calc(100% - 20px);
+    margin: 0 auto;
+    padding: 0 10px;
+    margin-top: 20px;
+    background-color: transparent;
+    border-radius: 30px;
+    z-index: 3;
+
+    position: relative;
+
+
+
+}
+
+.burger {
+    display: none;
+}
+
+.blur {
+    position: absolute;
+    z-index: -2;
+    width: 100%;
+    border-radius: 30px;
+    height: 100%;
+    /* From https://css.glass */
+    background: rgba(255, 255, 255, 0.2);
+
+    box-shadow: 0 4px 30px rgba(151, 151, 151, 0.1);
+    backdrop-filter: blur(13px);
+    -webkit-backdrop-filter: blur(13px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+
+}
+
+.homeHeader nav {
+    color: var(--black);
+
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+}
+
+.phonenav {
+    height: 100vh;
+    width: 0px;
+    background-color: aliceblue;
+    position: fixed;
+    top: 0px;
+    left: 0;
+    z-index: 12;
+    display: none;
+    overflow: hidden;
+    transition: width 0. s 2ase-in-out;
+}
+
+.phonenav.active {
+    width: 220px;
+
+}
+
+.phonenav ul {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 10px;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.blur {
+    filter: blur(2px);
+}
+
+.phonenav ul li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.phonenav .loginList {
+    padding: 10px;
+}
+
+.xmark {
+    position: absolute;
+    top: 20px;
+    right: 15px;
+
+}
+
+span {
+    margin-top: 10px;
+    gap: 10px;
+    display: grid;
+}
+
+span .active,
+.phonenav ul li:hover {
+    background-color: var(--darkGray);
+    background-color: var(--darkGray);
+    border-radius: 23px;
+    color: var(--white);
+    transition: background 0.2s ease-in-out;
+
+
+}
+
+.homeHeader nav ul {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    font-size: 14;
+    transition: background 0.2s ease-in-out;
+    gap: 0 20px;
+
+
+
+}
+
+nav h1 {
+    flex-basis: 100px;
+}
+
+
+
+
+
+.homeHeader nav ul li {
+    padding: 10px;
+    cursor: pointer;
+    font-weight: 500;
+
+
+}
+
+.homeHeader nav ul li:hover,
+.loginList.active {
+    background-color: var(--darkGray);
+    border-radius: 23px;
+    color: var(--white);
+    transition: background 0.2s ease-in-out;
+
+}
+
+.homeHeader nav ul li:hover>svg {
+    fill: var(--white);
+    transition: fill 0.2s ease-in-out;
+
+
+}
+
+/* svg{
+    transition: fill 0.2s ease-in-out;
+} */
+
+.loginList {
+    display: flex;
+    gap: 0 6px;
+    align-items: center;
+}
+
+.homeHeader h1 {
+    font-weight: 600;
+}
+
+.main {
+    margin: 40px 0;
+    display: flex;
+    gap: 20px;
+}
+
+.sidebar {
+    max-height: 80vh;
+    width: 300px;
+    /* border: 1px solid; */
+    position: sticky;
+    top: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* box-shadow: 0 4px 3px rgba(128, 128, 128, 0.121); */
+
+
+}
+
+.search_container {
+    position: relative;
+
+}
+
+.search_container input {
+    width: 100%;
+    padding: 10px 20px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    box-shadow: 0 4px 3px rgba(128, 128, 128, 0.121);
+    background-color: transparent;
+
+
+
+}
+.searchbtn{
+    border: none;
+}
+.search_container button {
+    position: absolute;
+    top: 13px;
+    right: 5;
+    width: 14px;
+}
+
+.sidebar ul {
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: space-evenly;
+
+    text-transform: capitalize;
+    
+
+
+}
+
+.sidebar ul li a {
+    list-style: none;
+    display: block;
+    text-decoration: none;
+    color: #787878;
+    width: 100%;
+
+    padding: 5px 10px;
+}
+
+.sidebar ul li .active,
+.sidebar ul li :hover {
+    color: var(--white);
+    background-color: var(--blue);
+    border-radius: 100px;
+}
+.contentchild{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 10px;
+    
+}
+.content {
+    width: 100%;
+
+    min-height: max-content;
+    
+    
+
+    .livre {
+        /* height: max-content; */
+
+        display: flex;
+        flex-direction: column;
+        height: max-content;
+        padding: 5px;
+        box-shadow: 0 4px 10px rgba(128, 128, 128, 0.263);
+        border-radius: 10px;
+        gap: 5px;
+        height: max-content;
+
+        img {
+            width: 100%;
+            border-radius: 4px;
+            object-fit: fill;
+            height: 100%;
+          
+      
+            
+         
+        
+        }
+    
+
+        .info {
+            margin: 10px 5px;
+        }
+
+        .info p {
+            font-size: small;
+            color: rgb(146, 144, 144);
+
+        }
+
+        .info div {
+
+            margin-top: 8;
+            width: 100%;
+
+
+
+        }
+
+        .info a.btn {
+
+            align-self: end;
+            border-radius: 10px;
+            color: var(--black);
+            border: 1px solid var(--blue);
+            padding: 7px 8px;
+            font-size: small;
+            text-align: center;
+            display: block;
+
+        }
+
+    }
+
+}
+
+i {
+    cursor: pointer;
+}
+
+@media (max-width:1025px) {
+    .contentchild {
+        grid-template-columns: repeat(3, 1fr);
+
+        
+    }
+    
+
+
+}
+
+@media (max-width: 768px) {
+    .link {
+        display: none !important;
+        ;
+
+
+
+    }
+
+    .formLink {
+        display: none !important;
+    }
+
+    .burger {
+        display: block;
+    }
+
+    .contentchild {
+ 
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* .sidebar {
+        width: 200px;
+    } */
+
+    .homeHeader nav {
+        justify-content: space-between;
+        padding: 10px 40px;
+    }
+
+    .phonenav {
+        display: block;
+        transition: width 0.2s ease-in-out;
+    }
+    .main{
+        flex-direction: column;
+    }
+    .main .sidebar{
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+    }
+    .main .sidebar ul{
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: center;
+
+       
+
+    }
+
+
+}
+
+
+
+@media (max-width: 480px) {
+    .contentchild {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+}

@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'style/global.css' %}"/>
+    <link rel="stylesheet" href="{% static 'style/dashboard/dashboard.css' %}"/>
+    <link rel="stylesheet" href="{% static 'style/dashboard/livre.css' %}"/>
+    <link rel="stylesheet" href="{% static 'style/dashboard/ajouter.css' %}"/>
+    <link rel="stylesheet" href="{% static 'style/dashboard/detailLivre.css' %}"/>
+    
+    <link
+      rel="stylesheet"
+      href="{% static 'style/fontawesome-free-6.5.2-web/css/all.min.css' %}"/>
+    <div class="countainer">
+      <nav class="sidebar closed" >
+        <div class="close">
+
+          <i class="fa-solid fa-angle-left"></i>
+        </div>
+        <div class="logo">
+          <h3>AdminDash</h3>
+        </div>
+
+        <ul class="listDash">
+          <li>
+            <a href="#" class="">
+              <i class="fa-solid fa-sm fa-gauge-high"></i>dashboard</a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa-solid fa-address-card fa-sm"></i> Profile</a
+            >
+          </li>
+          <li>
+            <a href="{% url 'users_lists' %}"> <i class="fa-solid fa-user fa-sm"></i> Users</a>
+          </li>
+          <li>
+            <a href="{% url 'liste_livres' %}" class="active"> <i class="fa-solid fa-sm fa-book"></i> Livres</a>
+          </li>
+        </ul>
+        <ul class="listDash2">
+          <li>
+            <a href="{% url 'logout_user' %}">
+              <i class="fa-solid fa-right-to-bracket fa-sm"></i> Logout</a
+            >
+          </li>
+          <li>
+            <a href="#"> <i class="fa-solid fa-gear fa-sm"></i> Setting</a>
+          </li>
+        </ul>
+      </nav>
+      <div class="main">
+        <div>
+          <div class="header">
+            <div class="location open" >
+              <i class="fa-solid fa-bars"></i>
+              <h2>Livres</h2>
+            </div>
+            <div class="right">
+              <div class="search_container">
+                <input type="text" class="sarch" placeholder="search.." />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512 "
+                  class="searchIcon"
+                >
+                  <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                  <path
+                    fill="#bdbdbd"
+                    d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
+                  />
+                </svg>
+              </div>
+              <span>
+                <img src="{% static 'img/2023MayFri.jpg' %}" alt="" />
+              </span>
+            </div>
+          </div>
+
+          <div class="content">
+         
+           <div class="btndash">
+            <a href="{% url 'page_ajout' %}">editer Livre   <i class="fa-solid fa-pen-to-square"></i></a>
+          
+           </div>
+           
+           <div class="livredetail">
+            <div class="imglivre">
+              <img src="{{livre.image_couverture.url}}" alt="{{livre.titre}}">
+
+            </div>
+             <div class="content">
+                <p> Titre : <span> {{livre.titre}}</span> </p>
+                <p>Auteur : <span> {{livre.auteur}} </span> </p>
+                <p>nb Exemplaire : <span> {{ livre.get_NbrExemple}}</span> </p>
+                <p class="">etat : <span>{% if livre.exemplaires_livre.count > 1  %}disponsible{% else %}non disponsible{% endif %}</span> </p>
+                <p> Description : <span>{{livre.description}}</span></p>
+                <div class="etatchange">
+              <div class="toggle-switch">
+                {% if livre.exemplaires_livre.count > 1 %}
+                <input class="toggle-input" id="toggle" type="checkbox"  checked >
+                {% else %}
+                <input class="toggle-input" id="toggle" type="checkbox"   >
+                {% endif  %} 
+                <label class="toggle-label" for="toggle"></label>
+            
+              </div>
+              <h5>Pret</h5>
+             </div>
+               
+
+             </div>
+
+           </div>  
+           
+           <div class="exemplaire">
+            <h2>
+              Exemplaire
+
+            </h2>
+            <div class="btndash">
+              <a href="{% url 'ajouter_exemplaire' livre.id %}">ajouter Exemplaire   <i class="fa-solid fa-plus"></i></a>
+            
+             </div>
+             </div>
+            <div style="overflow-x:auto;">
+              <table>
+                <tr>
+                  <th>Code</th>
+                  <!--<th style="font-weight: bold;">code</th>-->
+                  <th style="font-weight: bold;">action</th>
+                 
+                  
+                </tr>
+               {% if exemplaires %}
+               {% for exemplaire in exemplaires %}
+                <tr>
+                  <td>{{exemplaire.id}}</td>
+                  <!--<td>94</td>-->
+                  <td class="action">
+                    <!--<i class="fa-solid fa-pen-to-square"></i>-->
+                   <a href="{% url 'supprimer_exemplaire' livre.id %}" ><i class="fa-solid fa-trash"></i></a>
+                  </td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+          
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+<script src="{% static 'js/sidebar.js' %}"></script>
+{% endblock %}

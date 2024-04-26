@@ -1,0 +1,250 @@
+@import "../color.css";
+i{
+    cursor: pointer;
+}
+/* start sidebar  */
+.countainer {
+    display: flex;
+    min-height: 100vh;
+
+}
+
+.countainer nav {
+    height: 100vh;
+    width: 250px;
+    position: sticky !important;
+    top: 0;
+    background-color: var(--darkGray);
+position: relative;
+}
+
+.countainer .main {
+    height: max-content;
+    width: 100%;
+}
+
+.countainer .sidebar h3 {
+    font-size: x-large;
+    color: var(--blue);
+    font-weight: bold;
+    margin-top: 10px;
+
+}
+
+.countainer .sidebar .logo {
+    padding: 10px 20px;
+}
+
+.countainer .sidebar {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.countainer .sidebar ul li a {
+    color: var(--white) !important;
+    color: var(--white) !important;
+    padding: 7px 20px;
+    width: 100%;
+    display: block;
+    transition: background 0.1s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sidebar ul li i {
+    color: var(--white);
+}
+
+.countainer .sidebar ul li a.active,
+.countainer .sidebar ul li a:hover {
+    background-color: var(--blue);
+    font-weight: bold;
+    color: var(--white);
+    transition: background 0.1s ease-in-out;
+}
+
+
+.countainer .listDash {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.countainer .listDash2 {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    gap: 10px;
+
+}
+
+.close{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: var(--white);
+    cursor: pointer;
+    display: none;
+}
+.open i{
+    display: none;
+}
+
+/* finsh sidebar  */
+
+.main {
+    max-width: 1000px;
+
+    margin: 10px auto;
+
+}
+
+/*header */
+.header {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header .location {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.right img {
+    width: 30px;
+    border-radius: 100%;
+}
+
+
+.search_container {
+    position: relative;
+
+}
+
+.search_container input {
+    width: 200px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    box-shadow: 0 4px 3px rgba(128, 128, 128, 0.121);
+    background-color: transparent;
+
+
+
+}
+
+.search_container input:focus,
+.search_container input:hover {
+    box-shadow: 0 10px 10px rgba(128, 128, 128, 0.121);
+}
+
+.search_container svg {
+    position: absolute;
+    top: 12px;
+    right: 5;
+    width: 14px;
+}
+
+/* fin header */
+
+.content {
+    padding: 20px;
+    margin-top: 30px;
+}
+
+.containee_card {
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+
+
+}
+
+.content .cards {
+    font-size: large;
+    min-height: max-content;
+    padding: 10px 12px;
+    display: flex;
+    box-shadow: 0 4px 3px rgba(128, 128, 128, 0.121);
+    gap: 10px;
+    align-items: center;
+}
+.content .cards p{
+    font-size: medium;
+color: rgb(150, 150, 150);
+font-weight: bold;
+}
+
+.content .cards span i {
+    padding: 20px 17px;
+    
+    display: block;
+    background-color: bisque;
+}
+.charts{
+  
+}
+canvas {
+    width: 600px; /* Set width */
+    height: 300px;
+    
+     /* Set height */
+}
+
+.charts{
+    /* width: 300px;*/
+    margin-top: 30px; 
+}
+
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+    .countainer nav{
+      position: fixed !important;
+      top: 0;
+    width: 200px;
+transition: width 0.2s ease-in-out;
+      
+    } 
+    .countainer nav.closed{
+        width: 00px;
+        overflow: hidden;
+        transition: width 0.2s ease-in-out;
+    }
+    .close{
+        display: block;
+    }
+    .open i{
+        display: block;
+    }
+   
+      
+   }
+   
+   
+   @media (max-width: 480px) {
+   
+   
+   }

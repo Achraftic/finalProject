@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="post" action="">
+    {% csrf_token %}
+    <input type="text" name="titre" placeholder="Rechercher exemplaire du ... ">
+    <button type="submit">Search</button>
+</form>
+<!--afficher les exemplaires trouvés-->
+{% if livre  %}
+<div class="livre">
+    <div class="imgcontainer">
+        <img src="{{livre.image_couverture.url}}" alt="{{livre.titre}}" style="max-width:250px;">
+    </div>
+    <div class="info">
+        <h4>{{livre.titre}}</h4>
+        <p>{{livre.description}}</p>
+        <!-- <p> Nb exemplaire10</p> -->
+        <div>
+            <a href="" class="btn">Emprinter</a>
+        </div>
+    </div>
+</div>
+{% else %} 
+<p>
+{% for message in messages %}
+{{message}}
+{% endfor %}
+</p>
+{% endif %}
+{% endblock %}
