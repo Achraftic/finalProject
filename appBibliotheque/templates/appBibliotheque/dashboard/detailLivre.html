@@ -1,0 +1,74 @@
+{% extends './base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="btndash">
+  <a href="{% url 'page_ajout' %}">editer Livre   <i class="fa-solid fa-pen-to-square"></i></a>
+
+ </div>
+ 
+ <div class="livredetail">
+  <div class="imglivre">
+    <img src="{{livre.image_couverture.url}}" alt="{{livre.titre}}">
+
+  </div>
+   <div class="content">
+      <p> Titre : <span> {{livre.titre}}</span> </p>
+      <p>Auteur : <span> {{livre.auteur}} </span> </p>
+      <p>nb Exemplaire : <span> {{ livre.get_NbrExemple}}</span> </p>
+      <p class="">etat : <span>{% if livre.exemplaires_livre.count > 1  %}disponsible{% else %}non disponsible{% endif %}</span> </p>
+      <p> Description : <span>{{livre.description}}</span></p>
+      <div class="etatchange">
+    <div class="toggle-switch">
+      {% if livre.exemplaires_livre.count > 1 %}
+      <input class="toggle-input" id="toggle" type="checkbox"  checked >
+      {% else %}
+      <input class="toggle-input" id="toggle" type="checkbox"   >
+      {% endif  %} 
+      <label class="toggle-label" for="toggle"></label>
+  
+    </div>
+    <h5>Pret</h5>
+   </div>
+     
+
+   </div>
+
+ </div>  
+ 
+ <div class="exemplaire">
+  <h2>
+    Exemplaire
+
+  </h2>
+  <div class="btndash">
+    <a href="{% url 'ajouter_exemplaire' livre.id %}">ajouter Exemplaire   <i class="fa-solid fa-plus"></i></a>
+  
+   </div>
+   </div>
+  <div style="overflow-x:auto;">
+    <table>
+      <tr>
+        <th>Code</th>
+        <!--<th style="font-weight: bold;">code</th>-->
+        <th style="font-weight: bold;">action</th>
+       
+        
+      </tr>
+     {% if exemplaires %}
+     {% for exemplaire in exemplaires %}
+      <tr>
+        <td>{{exemplaire.id}}</td>
+        <!--<td>94</td>-->
+        <td class="action">
+          <!--<i class="fa-solid fa-pen-to-square"></i>-->
+         <a href="{% url 'supprimer_exemplaire' livre.id %}" ><i class="fa-solid fa-trash"></i></a>
+        </td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+
+    </table>
+  </div>
+</div>
+{% endblock %}

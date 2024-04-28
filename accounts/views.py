@@ -58,9 +58,12 @@ def login_user(request):
 def logout_user(request):#champs à definir
     logout(request)
     return redirect('home')
+
 def users_lists(request):
     users = Utilisateur.objects.all()
-    return render(request,'appBibliotheque/livre.html',{'users' : users })
+    return render(request,'appBibliotheque/home/livre.html',{'users' : users })
+
+
 def delete_user(request,username):
     #users = users = Utilisateur.objects.all()
     decoded_username = unquote(username)

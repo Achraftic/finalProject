@@ -9,7 +9,7 @@ def home(request):
     paginator = Paginator(livres, 6)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request,'appBibliotheque/home.html',{'page_obj' : page_obj })
+    return render(request,'appBibliotheque/user/home.html',{'page_obj' : page_obj })
 # @login_required
 def rechercher_livre(request):
     query = request.GET.get('titre')
@@ -23,11 +23,11 @@ def rechercher_livre(request):
     else:
         message = "No search query provided."
 
-    return render(request, 'appBibliotheque/home.html', {'page_obj': page_obj if query else None, 'query': query, 'message': message})
+    return render(request, 'appBibliotheque/user/home.html', {'page_obj': page_obj if query else None, 'query': query, 'message': message})
       
 def detail_livre(request,slug):
     livre = get_object_or_404(Livre,slug=slug)
-    return render(request,'appBibliotheque/unLivre.html',{"livre_detail":livre})
+    return render(request,'appBibliotheque/user/unLivre.html',{"livre_detail":livre})
 
 def emprunter_exemplaire(request, slug):
     livre = get_object_or_404(Livre, slug=slug)
@@ -51,12 +51,16 @@ def emprunter_exemplaire(request, slug):
         else:
             message = f"Aucun exemplaire disponible pour le livre '{livre.titre}'."
     
-    return render(request, 'appBibliotheque/home.html', {'livre': livre, 'message': message})
+    return render(request, 'appBibliotheque/user/home.html', {'livre': livre, 'message': message})
+
+
 def liste_livres(request):
     livres = Livre.objects.all()
-    return render(request,'appBibliotheque/livre.html',{'livres' : livres })
+    return render(request,'appBibliotheque/dashboard/livre.html',{'livres' : livres })
+
+
 def page_ajout(request):
-    return render(request, 'appBibliotheque/ajouter.html')
+    return render(request, 'appBibliotheque/dashboard/ajouter.html')
 
 
 def ajouter_livre(request):
@@ -72,11 +76,11 @@ def ajouter_livre(request):
         if titre and auteur and isbn and description and image_couverture:
             livre.save()
             messages.success(request, "Le livre a été ajouté avec succès.")
-            return render(request,'appBibliotheque/ajouter.html',{'livres' : livres })  # Assurez-vous que 'acceuileBli' est correct
+            return render(request,'appBibliotheque/dashboard/ajouter.html',{'livres' : livres })  # Assurez-vous que 'acceuileBli' est correct
         else:
             messages.error(request, "Le formulaire n'est pas valide. Veuillez corriger les erreurs.")
     else:
-       return render(request, 'appBibliotheque/ajouter.html', {'livres' : livres })
+       return render(request, 'appBibliotheque/dashboard/ajouter.html', {'livres' : livres })
 def supprimer_exemplaire(request,id):
     
     livre = get_object_or_404(Livre,id=id)
@@ -96,10 +100,10 @@ def ajouter_exemplaire(request, id):
 def detailLivre(request,id):
     livre = get_object_or_404(Livre,id=id)
     exemplaires = Exemplaire.objects.filter(livre=livre)#disponible = True
-    return render(request,'appBibliotheque/detailLivre.html',{'livre':livre,'exemplaires':exemplaires })
+    return render(request,'appBibliotheque/dashboard/detailLivre.html',{'livre':livre,'exemplaires':exemplaires })
 
 def page_UnLivre(request):
-    return render(request,'appBibliotheque/unLivre.html')
+    return render(request,'appBibliotheque/user/unLivre.html')
 
 def filterLivre(request,genre):
     if(genre=="all"):
@@ -111,4 +115,4 @@ def filterLivre(request,genre):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
    
-    return render(request,'appBibliotheque/home.html', {'genre': genre, 'page_obj': page_obj}) 
+    return render(request,'appBibliotheque/user/home.html', {'genre': genre, 'page_obj': page_obj}) 

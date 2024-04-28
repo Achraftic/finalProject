@@ -1,0 +1,20 @@
+{% extends 'base.html' %} 
+{% load static %}
+ {% block content %}
+<link rel="stylesheet" href="{% static 'style/global.css' %}" />
+<link rel="stylesheet" href="{% static 'style/home.css' %}" />
+<link rel="stylesheet" href="{% static 'style/unLivre.css' %}" />
+<link
+  rel="stylesheet"
+  href="{% static 'style/fontawesome-free-6.5.2-web/css/all.min.css' %}"
+/>
+
+{% include './layout/navPhone.html' %}
+<div class="container">
+  {% include './layout/header.html' %}
+   {% block content2 %}
+    {% endblock %}
+</div>
+
+<script src="{% static 'js/scripts.js'%}"></script>
+{% endblock %}

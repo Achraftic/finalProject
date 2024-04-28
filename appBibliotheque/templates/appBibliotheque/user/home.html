@@ -1,0 +1,75 @@
+{% extends './base.html' %}
+{% load static  %}
+{% block content2 %}
+
+<div class="main">
+<div class="sidebar">
+            
+    <form class="search_container" method="get" action="{% url 'rechercher_livre' %}">
+        <input type="text" name="titre" class="search" value="{{ query }}" placeholder="Search..">
+        <button type="submit" class="searchbtn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="searchIcon">
+                <path fill="#bdbdbd" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
+            </svg>
+        </button>
+    </form>
+    
+    
+    <ul>
+<!-- Assuming your index route name is 'index' -->
+      <li><a href="{% url 'filterLivre' genre='all' %}" {% if request.resolver_match.url_name == 'home' or genre == 'all' %}class="active"{% endif %}>All</a></li>
+
+        <li><a href="{% url 'filterLivre' genre='roman' %}" {% if genre == 'romance' %} class="active"{% endif %}>Romans</a></li>
+        <li><a href="{% url 'filterLivre' genre='maths' %} "  {% if genre == 'maths' %} class="active"{% endif %}>Maths</a></li>
+ <li><a href="{% url 'filterLivre' genre='physique' %}"  {% if genre == 'physiques' %} class="active"{% endif %}>Physiques</a></li>
+
+        <li><a href="{% url 'filterLivre' genre='sports' %}"  {% if genre == 'sports' %} class="active"{% endif %}>Sports</a></li>
+        <li><a href="{% url 'filterLivre' genre='social' %}"  {% if genre == 'social' %} class="active"{% endif %}>Social</a></li>
+        <li><a href="{% url 'filterLivre' genre='culture' %}"  {% if genre == 'culture' %} class="active"{% endif %}>Culture</a></li>
+    </ul>
+</div>
+
+{% if page_obj %}
+<div class="content">
+    <div class="contentchild">
+        {% for livre in page_obj %}
+            <div class="livre">
+                <div class="imgcontainer">
+                    <img src="{{ livre.image_couverture.url }}" alt="{{ livre.titre }}">
+                </div>
+                <div class="info">
+                    <h4>{{ livre.titre }}</h4>
+                    <div>
+                        <a href="{% url 'detail_livre' livre.slug %}" class="btn">Detail</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; première</a>
+                <a href="?page={{ page_obj.previous_page_number }}">précédente</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">suivante</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">dernière &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+{% else %}
+
+        <p class="error_msg">No search results found.</p>
+ </div>
+{% endif %}
+
+   
+{% endblock %}
+

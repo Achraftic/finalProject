@@ -9,6 +9,9 @@ gap: 20px;
 position: relative;
 color: var(--black);
 }
+h1{
+    border: none;
+}
 
 
 .flexContainer .image{
@@ -22,7 +25,8 @@ width: max-content;
 }
 .flexContainer .image img{
 
-    max-width: 300px;
+    /* max-width: 300px; */
+    width: 300px;
     box-shadow: 0 19px 12px 0px rgb(162, 162, 162);
 
 }
@@ -34,29 +38,19 @@ width: max-content;
     gap: 13px;
     position: relative;
     padding: 20px;
-    /* border: 1px solid; */
-}
-.text > h1{
-    font-size: 40px;
-    border: 1px solid;
-    max-width: 500px;
     
+    min-width: 300px;
 
 }
-.text > p{
-   line-height: 1.2;
-   max-width: 100%;
-   color: rgba(0, 0, 0, 0.68);
-}
+
 
 .text button{
-    width: max-content;
-    padding: 10px 16px;
+    width: 100px;
+    padding: 10px 13px;
     background-color: var(--white);
     color: var(--black);
     border: none; 
     border-radius:23px;
-    
 }
 .text .listinfo{
     display: flex;
@@ -70,6 +64,9 @@ width: max-content;
 }
 .text .value{
     color: rgba(0, 0, 0, 0.68);
+}
+.text .discription{
+    max-width: 400px;
 }
 li{
     margin-top: 10px;
@@ -200,4 +197,20 @@ justify-items: end;
 	to {
 		opacity: 1;
 	}
+}
+@media (max-width: 768px) {
+  
+    .flexContainer .image img{
+
+        max-width: 300px;
+     
+    
+    }
+   
+}
+
+
+@media (max-width: 480px) {
+
+
 }
