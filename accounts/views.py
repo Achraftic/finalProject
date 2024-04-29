@@ -61,7 +61,7 @@ def logout_user(request):#champs à definir
 
 def users_lists(request):
     users = Utilisateur.objects.all()
-    return render(request,'appBibliotheque/home/livre.html',{'users' : users })
+    return render(request,'appBibliotheque/dashboard/users.html',{'users' : users })
 
 
 def delete_user(request,username):

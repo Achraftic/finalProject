@@ -3,6 +3,7 @@ from appBibliotheque.models import Livre,Emprunter,Exemplaire
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator 
+from accounts.models import Utilisateur
 
 def home(request):
     livres = Livre.objects.order_by('id')
@@ -58,11 +59,11 @@ def liste_livres(request):
     livres = Livre.objects.all()
     return render(request,'appBibliotheque/dashboard/livre.html',{'livres' : livres })
 
-
 def page_ajout(request):
     return render(request, 'appBibliotheque/dashboard/ajouter.html')
-
-
+def edit_livre(request,id):
+    livre = get_object_or_404(Livre,id=id)
+    return render(request,'appBibliotheque/dashboard/edit.html',{'livre' : livre })
 def ajouter_livre(request):
     livres = Livre.objects.all()
     if request.method == 'POST':
@@ -81,6 +82,8 @@ def ajouter_livre(request):
             messages.error(request, "Le formulaire n'est pas valide. Veuillez corriger les erreurs.")
     else:
        return render(request, 'appBibliotheque/dashboard/ajouter.html', {'livres' : livres })
+   
+   
 def supprimer_exemplaire(request,id):
     
     livre = get_object_or_404(Livre,id=id)
@@ -116,3 +119,16 @@ def filterLivre(request,genre):
     page_obj = paginator.get_page(page_number)
    
     return render(request,'appBibliotheque/user/home.html', {'genre': genre, 'page_obj': page_obj}) 
+
+def dashboard(request):
+    nbUsers = Utilisateur.objects.all().filter(est_bibliothecaire=False).count()
+    nbLivres=Livre.objects.all().count()
+    nbEmpruntes=Emprunter.objects.all().count()
+    nbExemplairePerdu=Exemplaire.objects.all().filter(perdu=True).count()
+    context={
+        "nbUsers":nbUsers,
+         "nbLivres":nbLivres,
+         "nbEmpruntes":nbEmpruntes,
+         "nbExemplairePerdu":nbExemplairePerdu
+    }
+    return render(request,'appBibliotheque/dashboard/dashboard.html',context)

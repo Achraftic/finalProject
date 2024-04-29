@@ -3,6 +3,10 @@
     <nav class="laptopNav">
         <h1>Logo</h1>
         <ul class="link">
+             <a class="" href="">
+                <li {% if request.path == '/' or 'genre' in request.path%} class="active"{% endif %}>Home</li>
+            
+            </a>
             {% if user.is_authenticated %}
                 {% if user.est_bibliothecaire %}
                     <a href="{% url 'liste_livres' %}">
@@ -10,13 +14,23 @@
                     </a>
                 {% endif %}
             {% endif %}
-            <li>About Us</li>
-            <li>Contact</li>
+            <a class="" href="">
+                <li class="">About us 
+               </li>
+
+            <a class="" href="">
+                <li class="">Contact us 
+               </li>
+           
+           </a>
+          
+       
+     
         </ul>
         <ul class="formLink">
             {% if user.is_authenticated %}
                 <a href="{% url 'logout_user' %}">
-                    <li class="loginList">Logout</li>
+                    <li class="loginList"> Logout <i class="fa-solid fa-right-to-bracket"></i></li>
                 </a>
             {% else %}
                 <a href="{% url 'pagelogin' %}">

@@ -1,7 +1,39 @@
 {% extends './base.html' %}
 {% load static  %}
 {% block content2 %}
+<style>
+.pagination{
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 30px auto;
+   
+    padding: 20px;
+   .step-links{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+   
 
+   }
+   .current{
+    cursor:auto ;
+   }
+   .paginateflesh{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    
+   }
+   
+}
+
+</style>
 <div class="main">
 <div class="sidebar">
             
@@ -49,17 +81,22 @@
     <div class="pagination">
         <span class="step-links">
             {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; première</a>
-                <a href="?page={{ page_obj.previous_page_number }}">précédente</a>
+            <a class="paginateflesh" href="?page={{ page_obj.previous_page_number }}"> <i class="fa-solid fa-chevron-left"></i>  précédente</a>
+            <a class="current">
+                Page {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+            </a>
+            <a class="paginateflesh" href="?page=1"> première <i class="fa-solid fa-chevron-right"></i></a>
+    
             {% endif %}
 
-            <span class="current">
-                Page {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
-            </span>
-
+          
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">suivante</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">dernière &raquo;</a>
+            <!-- <a  class="paginateflesh" href="?page={{ page_obj.paginator.num_pages }}"> <i class="fa-solid fa-chevron-left"></i> dernière </a> -->
+            <a class="current">
+                Page {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+            </a>
+            <a class="paginateflesh" href="?page={{ page_obj.next_page_number }}"> suivante <i class="fa-solid fa-chevron-right"></i></a>
+    
             {% endif %}
         </span>
     </div>

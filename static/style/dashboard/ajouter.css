@@ -111,4 +111,8 @@ border-radius: 100px;
     display: flex;
     justify-content: end;
   }
+
+.img_ajouter img{
+    width: 200px;
+    }
  

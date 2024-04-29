@@ -155,7 +155,7 @@ nav h1 {
 
 }
 
-.homeHeader nav ul li:hover,
+.homeHeader nav ul li:hover,.homeHeader nav ul li.active,
 .loginList.active {
     background-color: var(--darkGray);
     border-radius: 23px;
@@ -273,9 +273,7 @@ nav h1 {
     grid-template-columns: repeat(4,1fr);
     gap: 20px;
     padding: 10px;
- 
-   
-    
+
     margin: auto;
     
 }
@@ -424,8 +422,26 @@ i {
 
 
 @media (max-width: 480px) {
-    .contentchild {
-        grid-template-columns: repeat(1, max-content);
+    .content{
+
+width: 100%;
     }
+    .contentchild {
+        grid-template-columns: repeat(1, 1fr);
+        
+        width: max-content;
+
+    }
+ 
+    .content {        
+            .livre {
+        
+                img {
+                    width: 280px;
+                    max-width: 300px;
+                    height: 380px;         
+        
+        }
+   } }
 
 }

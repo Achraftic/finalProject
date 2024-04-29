@@ -1,0 +1,48 @@
+{% extends './base.html' %}
+{% load static %}
+{% block header %}
+Liste Users
+{% endblock %}
+{% block content %}
+{% if users %}
+<div class="btndash">
+ <a href="{% url 'page_ajout' %}">ajouter user   <i class="fa-solid fa-plus"></i></a>
+
+</div>
+
+
+ <div class="content">  
+ <div style="overflow-x:auto;">
+   <table>
+     <tr>
+       <th>Usernames</th>
+       <th>Email</th>
+       <th>Est_bibliothecaire</th>
+       <th>Nb Emprunts</th>
+       <th>Action</th>
+       
+     </tr>
+     {% for u in users %}
+     <tr>
+       
+       <td>{{u.username}}</td>
+       <td>{{u.email}}</td>
+       {% if u.est_bibliothecaire %}
+         <td class="etat"> <span class="true">true</span>
+       {% else %}
+         <td class="etat"> <span class="false">false</span>
+       {% endif %}
+       <td>{{ u.emprunter_set.count }}</td>
+       <td class="action">
+       <!--  <a href=""><i class="fa-solid fa-pen-to-square"></i> -->
+         <a href="{% url  'delete_user' u.username %}"><i class="fa-solid fa-trash"></i></a>
+       <!--  <a><i class="fa-solid fa-eye"></i></a> -->
+       </td>
+     </tr>
+     {% endfor %}
+   </table>
+ </div>    
+{% endif %} 
+</div>
+</div>
+{% endblock %}

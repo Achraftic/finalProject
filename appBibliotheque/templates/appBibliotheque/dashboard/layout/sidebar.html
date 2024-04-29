@@ -9,19 +9,20 @@
 
     <ul class="listDash">
       <li>
-        <a href="#" class="">
+        <a href="{%url 'dashboard' %} " {% if request.path == '/dashboard'%} class="active"{% endif %}>
           <i class="fa-solid fa-sm fa-gauge-high"></i>dashboard</a>
       </li>
       <li>
         <a href="#">
-          <i class="fa-solid fa-address-card fa-sm"></i> Profile</a
+         <i class="fa-solid fa-address-book  fa-sm"></i> Empruntes</a
         >
       </li>
       <li>
-        <a href="{% url 'users_lists' %}"> <i class="fa-solid fa-user fa-sm"></i> Users</a>
+        <a href="{% url 'users_lists' %}" {% if request.path == '/users_lists'%} class="active"{% endif %}> <i class="fa-solid fa-sm fa-book"></i> Users</a>
       </li>
       <li>
-        <a href="{% url 'liste_livres' %}" class="active"> <i class="fa-solid fa-sm fa-book"></i> Livres</a>
+        <a href="{% url 'liste_livres' %}" {% if request.path == '/liste_livres' or '/detailLivre' in request.path or 'page_ajout' in request.path  or '/ajouter_livre' in request.path  or '/edit_livre' in request.path   %} class="active"{% endif %}> <i class="fa-solid fa-sm fa-book"></i> Livres</a>
+
       </li>
     </ul>
     <ul class="listDash2">
@@ -30,8 +31,8 @@
           <i class="fa-solid fa-right-to-bracket fa-sm"></i> Logout</a
         >
       </li>
-      <li>
+      <!-- <li>
         <a href="#"> <i class="fa-solid fa-gear fa-sm"></i> Setting</a>
-      </li>
+      </li> -->
     </ul>
   </nav>

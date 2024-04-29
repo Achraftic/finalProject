@@ -39,7 +39,7 @@
       </div>
       {% if user.is_authenticated %}
       <!-- type="submit "  onclick="window.dialog.showModal();" -->
-      <button ><a href="{% url 'emprunter_exemplaire' livre_detail.slug %}">Emprunter</a></button>
+      <button ><a href="{% url 'emprunter_exemplaire' livre_detail.slug %}">Demander</a></button>
       {% else %}
 
       <button ><a href="{% url 'login' %}">Se connecter</a></button>
