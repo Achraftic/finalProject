@@ -1,0 +1,47 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block header %}
+Liste Livres
+{% endblock %}
+
+{% block content %}
+{% if livres %}
+<div class="btndash">
+ <a href="{% url 'ajouter_livre' %}">ajouter Livre   <i class="fa-solid fa-plus"></i></a>
+</div>
+
+<div style="overflow-x:auto;">
+   <table>
+     <tr>
+       <th>Id</th>
+       <th>ISBN</th>
+       <th>Nom Livre</th>
+       <th>Auteur</th>
+       <th>nb exemplaire</th>
+       <th>disppnible</th>
+       <th>action</th>
+     </tr>
+     {% for livre in livres %}
+     <tr>
+       <td>{{livre.id}}</td>
+       <td>{{livre.isbn}}</td>
+       <td>{{livre.titre}}</td>
+       <td>{{livre.auteur}}</td>
+       <td>{{ livre.get_NbrExemple }}</td>
+       {% if livre.exemplaires_livre.count > 1 %}
+       <td class="etat"> <span class="true">true</span></td>
+       {% else %}
+       <td class="etat"> <span class="false">false</span>    </td>
+       {% endif %}
+       <td class="action">
+         <a href="{% url 'ajouter_exemplaire' livre.id %}"><i class="fa-solid fa-pen-to-square"></i></a>
+         <a href="{% url 'supprimer_exemplaire' livre.id %}"><i class="fa-solid fa-trash"></i></a>
+         <a href="{% url 'detailLivre' livre.id %}"> <i class="fa-solid fa-eye"></i></a>
+       </td>
+     </tr>
+     {% endfor %}
+   </table>
+ </div> 
+{% endif %}
+{% endblock %}

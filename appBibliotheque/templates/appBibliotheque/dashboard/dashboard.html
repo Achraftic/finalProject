@@ -1,0 +1,90 @@
+{% extends './base.html' %}
+{% block header %}
+Dashboard
+{% endblock %}
+
+{% load static %}
+{% block content %}
+    
+
+<div class="containee_card">
+    <div class="cards">
+      <span>
+        <i class="fa-regular fa-lg fa-user"></i>
+      </span>
+      <div>
+        <h3>Users</h3>
+        <p>{{nbUsers}}</p>
+      </div>
+    </div>
+    <div class="cards">
+      <span>
+        <i class="fa-solid fa-lg fa-book"></i>
+      </span>
+      <div>
+        <h3>Book</h3>
+        <p>{{nbLivres}}</p>
+      </div>
+    </div>
+    <div class="cards">
+      <span>
+        <i class="fa-regular fa-lg fa-address-card"></i>
+      </span>
+      <div>
+        <h3>E.Empruntés</h3>
+        <p>{{nbEmpruntes}}</p>
+      </div>
+    </div>
+    <div class="cards">
+      <span>
+        <i class="fa-regular fa-lg fa-user"></i>
+      </span>
+      <div>
+        <h3>E.Perdu</h3>
+        <p>{{nbExemplairePerdu}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="charts">
+    <canvas id="myChart"></canvas>
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+  const ctx = document.getElementById('myChart').getContext('2d');
+
+// Chart data
+const data = {
+    labels: ['Perdu', 'Empruntés'],
+    datasets: [{
+        label: 'My First Dataset',
+        data: ["{{nbExemplairePerdu}}", "{{E.Empruntés}}"],
+        backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)'
+        ],
+        hoverOffset: 4
+    }]
+
+};
+
+// Configuration options
+const options = {
+    responsive: true,
+    maintainAspectRatio: false
+};
+
+// Create the chart
+const myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: data,
+    options: options
+});
+
+
+</script>
+{% endblock  %}

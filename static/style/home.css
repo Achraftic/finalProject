@@ -155,7 +155,7 @@ nav h1 {
 
 }
 
-.homeHeader nav ul li:hover,
+.homeHeader nav ul li:hover,.homeHeader nav ul li.active,
 .loginList.active {
     background-color: var(--darkGray);
     border-radius: 23px;
@@ -205,6 +205,12 @@ nav h1 {
 
 
 }
+.phonenav  a .active{
+    background-color: var(--darkGray);
+    border-radius: 23px;
+    color: var(--white);
+    transition: background 0.2s ease-in-out;
+}
 
 .search_container {
     position: relative;
@@ -220,6 +226,11 @@ nav h1 {
     box-shadow: 0 4px 3px rgba(128, 128, 128, 0.121);
     background-color: transparent;
 
+
+
+}
+.info h4{
+   max-width: 180px;
 
 
 }
@@ -265,38 +276,40 @@ nav h1 {
 }
 .contentchild{
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4,1fr);
     gap: 20px;
     padding: 10px;
+
+    margin: auto;
     
 }
 .content {
-    width: 100%;
-
-    min-height: max-content;
+   
     
+margin: auto;
+    min-height: max-content;
     
 
     .livre {
         /* height: max-content; */
-
+    
         display: flex;
         flex-direction: column;
-        height: max-content;
+     
         padding: 5px;
         box-shadow: 0 4px 10px rgba(128, 128, 128, 0.263);
         border-radius: 10px;
         gap: 5px;
-        height: max-content;
+        
 
         img {
-            width: 100%;
+            width: 200px;
             border-radius: 4px;
-            object-fit: fill;
-            height: 100%;
+            /* object-fit: cover;*/
+            margin: auto;
+            height: 270px; 
           
-      
-            
+       
          
         
         }
@@ -331,6 +344,7 @@ nav h1 {
             font-size: small;
             text-align: center;
             display: block;
+            width: min-content;
 
         }
 
@@ -344,7 +358,7 @@ i {
 
 @media (max-width:1025px) {
     .contentchild {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, max-content);
 
         
     }
@@ -371,8 +385,8 @@ i {
     }
 
     .contentchild {
- 
-        grid-template-columns: repeat(2, 1fr);
+     
+        grid-template-columns: repeat(2, max-content);
     }
 
     /* .sidebar {
@@ -414,8 +428,26 @@ i {
 
 
 @media (max-width: 480px) {
+    .content{
+
+width: 100%;
+    }
     .contentchild {
         grid-template-columns: repeat(1, 1fr);
+        
+        width: max-content;
+
     }
+ 
+    .content {        
+            .livre {
+        
+                img {
+                    width: 280px;
+                    max-width: 300px;
+                    height: 380px;         
+        
+        }
+   } }
 
 }

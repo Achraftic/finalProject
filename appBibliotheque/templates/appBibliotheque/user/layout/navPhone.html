@@ -1,0 +1,33 @@
+<div class="phonenav">
+    <div class="xmark">
+        <i class="fa-solid fa-xmark fa-xl"></i>
+    </div>
+    <ul class="phonelink">
+        <a href="/">
+            <li {% if request.path == '/' or 'genre' in request.path %} class="active"{% endif %}>Home</li>
+        </a>
+        <a href="{% url 'liste_livres' %}">
+            <li {% if request.path == '/liste-livres/' %} class="active"{% endif %}>Livres</li>
+        </a>
+        <a href="/about-us/">
+            <li {% if request.path == '/about-us/' %} class="active"{% endif %}>About Us</li>
+        </a>
+        <a href="/contact-us/">
+            <li {% if request.path == '/contact-us/' %} class="active"{% endif %}>Contact Us</li>
+        </a>
+        {% if user.is_authenticated %}
+        <a href="{% url 'logout_user' %}">
+            <li {% if request.path == '/logout/' %} class="active"{% endif %}>Logout <i class="fa-solid fa-right-to-bracket"></i> </li>
+        </a>
+    {% else %}
+        <a href="{% url 'pagelogin' %}">
+            <li {% if request.path == '/login/' %} class="active"{% endif %}>Login</li>
+        </a>
+    {% endif %}
+    {% if not user.is_authenticated %}
+        <a href="{% url 'register' %}">
+            <li {% if request.path == '/register/' %} class="active"{% endif %}>Register</li>
+        </a>
+    {% endif %}
+    </ul>
+</div>
