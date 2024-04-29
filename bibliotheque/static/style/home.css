@@ -205,6 +205,12 @@ nav h1 {
 
 
 }
+.phonenav  a .active{
+    background-color: var(--darkGray);
+    border-radius: 23px;
+    color: var(--white);
+    transition: background 0.2s ease-in-out;
+}
 
 .search_container {
     position: relative;
