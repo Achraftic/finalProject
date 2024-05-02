@@ -61,9 +61,36 @@ def liste_livres(request):
 
 def page_ajout(request):
     return render(request, 'appBibliotheque/dashboard/ajouter.html')
+
 def edit_livre(request,id):
     livre = get_object_or_404(Livre,id=id)
     return render(request,'appBibliotheque/dashboard/edit.html',{'livre' : livre })
+
+def update_livre(request, id):
+    livre = get_object_or_404(Livre, id=id)
+    if request.method == 'POST':
+        titre = request.POST.get('titre')
+        auteur = request.POST.get('auteur')
+        isbn = request.POST.get('isbn')
+        categories = request.POST.get('categories')
+        description = request.POST.get('description')
+        image_couverture = request.FILES.get('image_couverture')
+
+        livre.titre = titre
+        livre.auteur = auteur
+        livre.isbn = isbn
+        livre.categories = categories
+        livre.description = description
+        if image_couverture:
+            livre.image_couverture = image_couverture
+        livre.save()
+
+        messages.success(request, "Le livre a été mis à jour avec succès.")
+        return redirect('liste_livres')
+
+    return render(request, 'appBibliotheque/dashboard/edit.html', {'livre': livre})
+
+
 def ajouter_livre(request):
     livres = Livre.objects.all()
     if request.method == 'POST':

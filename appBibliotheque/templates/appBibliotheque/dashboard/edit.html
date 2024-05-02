@@ -8,14 +8,14 @@ Edit Livre
 
 {% block content %}
 
-<form action="{% url 'ajouter_livre' %}" method="post" enctype="multipart/form-data" >
+<form action="{% url 'update_livre' livre.id %}" method="post" enctype="multipart/form-data" >
   {% csrf_token %}
   <div class="inputs">
       <input name="titre" class="input" placeholder="Nom Livre" value="{{livre.titre}}" >
       <input name="isbn" class="input" placeholder="ISBN" value="{{livre.isbn}}">
       <input name="auteur" class="input" placeholder="auteur" value="{{livre.auteur}}">
       <input name="categories" class="input" placeholder="Categories" value="{{livre.categories}}">
-     <!-- <input type="number" class="input" placeholder="Nb Exemplaire"> -->
+  
     </div>
   
     <div class="field">
@@ -27,6 +27,7 @@ Edit Livre
     </div>
     <div class="img_ajouter">
         <img id="imgprv" src="{{livre.image_couverture.url}}" alt="{{livre.titre}}" />
+        
       </div>
     <label class="custum-file-upload" for="file">
       <div class="icon">
@@ -36,6 +37,8 @@ Edit Livre
          <span id="filename">Click to upload image</span>
          </div>
          <input type="file" name="image_couverture" id="file" onchange="previewImage(event)">
+        <input type="hidden" name="current_image_url" value="{{ livre.image_couverture.url }}">
+
       </label>
      
       
@@ -56,11 +59,14 @@ Edit Livre
       }
     }
     window.onload = function () {
-        // Pre-populate file input with the current image URL
-        const imageURL = "{% static 'img/3afb3c491fbec34c7419f1264faf414b.jpg' %}";
+       
+        const imageURL = "{{ livre.image_couverture.url }}";
         document.getElementById("file").value = imageURL;
+    
+ 
+        document.getElementById("imgprv").src = imageURL;
       };
-      
+ 
 
   </script>
 {% if messages %}

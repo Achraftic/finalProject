@@ -2,7 +2,7 @@
 from django.contrib import admin
 from django.urls import path
 from appBibliotheque.views import home,rechercher_livre,detail_livre,ajouter_livre,ajouter_exemplaire,page_UnLivre,filterLivre,edit_livre
-from appBibliotheque.views import emprunter_exemplaire,liste_livres,page_ajout,supprimer_exemplaire,detailLivre,dashboard
+from appBibliotheque.views import emprunter_exemplaire,liste_livres,page_ajout,supprimer_exemplaire,detailLivre,dashboard,update_livre
 # from appBibliotheque.views import categorie_math,categorie_Roman,categorie_Physique,categorie_Sport,categorie_Social,categorie_culture
 from accounts.views import register,signup,pagelogin,login_user,logout_user,users_lists,delete_user
 from django.conf.urls.static import static
@@ -22,6 +22,7 @@ urlpatterns = [
     path('rechercher_livre/',rechercher_livre,name='rechercher_livre'),
     path('ajouter_livre/',ajouter_livre,name='ajouter_livre'),
     path('edit_livre/<int:id>',edit_livre,name='edit_livre'),
+    path('update_livre/<int:id>',update_livre,name='update_livre'),
     path('liste_livres/',liste_livres,name='liste_livres'),
     path('supprimer_exemplaire/<int:id>',supprimer_exemplaire,name='supprimer_exemplaire'),
     path('detail_livre/<slug:slug>',detail_livre,name='detail_livre'),
