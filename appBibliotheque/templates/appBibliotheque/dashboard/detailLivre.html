@@ -45,7 +45,7 @@ Detail Livre
  
  <div class="exemplaire">
   <h2>
-    Exemplaire
+    Exemplaire {{livre.exemplaires_livre.count}}
 
   </h2>
   <div class="btndash">
@@ -57,6 +57,7 @@ Detail Livre
     <table>
       <tr>
         <th>Code</th>
+        <th>Disponibilite</th>
         <!--<th style="font-weight: bold;">code</th>-->
         <th style="font-weight: bold;">action</th>
        
@@ -66,6 +67,7 @@ Detail Livre
      {% for exemplaire in exemplaires %}
       <tr>
         <td>{{exemplaire.id}}</td>
+        <td> {{exemplaire.disponible}} </td>
         <!--<td>94</td>-->
         <td class="action">
           <!--<i class="fa-solid fa-pen-to-square"></i>-->

@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.models import User
 from .models import Utilisateur
+from django.contrib import messages
 from django.contrib.auth.forms import PasswordResetForm
 from urllib.parse import unquote
 User = get_user_model()
@@ -71,5 +72,6 @@ def delete_user(request,username):
     u_username = get_object_or_404(Utilisateur,username=decoded_username)
     if u_username and u_username.est_bibliothecaire == False:   
         u_username.delete()
+        messages.success(request,"le utilasteur est supprime avec succès")
     return redirect('users_lists')
         

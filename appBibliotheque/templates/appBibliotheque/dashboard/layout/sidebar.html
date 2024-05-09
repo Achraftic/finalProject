@@ -12,6 +12,10 @@
         <a href="{%url 'dashboard' %} " {% if request.path == '/dashboard/'%} class="active"{% endif %}>
           <i class="fa-solid fa-sm fa-gauge-high"></i>dashboard</a>
       </li>
+
+      <li>
+        <a href="{% url 'liste_demandes_emprunt' %}" {% if request.path == '/users_lists/'%} class="active"{% endif %}> <i class="fa-solid fa-sm fa-book"></i> Demande Empruntes</a>
+      </li>
       <li>
         <a href="#">
          <i class="fa-solid fa-address-book  fa-sm"></i> Empruntes</a
@@ -34,5 +38,6 @@
       <!-- <li>
         <a href="#"> <i class="fa-solid fa-gear fa-sm"></i> Setting</a>
       </li> -->
+    
     </ul>
   </nav>

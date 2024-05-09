@@ -13,7 +13,8 @@ class Livre(models.Model):
     image_couverture = models.ImageField(upload_to ='images',null = True,blank = True)
     categories = models.CharField(max_length=128,null = True)
     def get_NbrExemple(self):
-        return self.exemplaires_livre.count()+1
+        return self.exemplaires_livre.count()
+        # return self.exemplaires_livre.count()+1
     def __str__(self) -> str:
         return self.titre 
     def get_absolute_url(self):
@@ -34,4 +35,11 @@ class Emprunter(models.Model):
     date_emprunt = models.DateField(auto_now_add=True)
     date_retour = models.DateField(blank=True, null = True)
     accepter = models.BooleanField(default=False)
+    
+class DemandeEmprunt(models.Model):
+    id_demande = models.AutoField(primary_key=True)
+    exemplaire = models.ForeignKey(Exemplaire, on_delete=models.CASCADE)
+    utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
+    date_demande = models.DateTimeField(auto_now_add=True)
+    acceptee = models.BooleanField(default=False)
 

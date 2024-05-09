@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{% static 'style/dashboard/livre.css' %}" />
     <link rel="stylesheet" href ="{% static 'style/dashboard/ajouter.css' %}" />
     <link rel="stylesheet" href ="{% static 'style/dashboard/detailLivre.css' %}" />
+    
     <link
       rel="stylesheet"
       href="{% static 'style/fontawesome-free-6.5.2-web/css/all.min.css' %}" />
@@ -61,5 +62,21 @@
  
    
     <script src="{% static 'js/sidebar.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   {% if messages %}
+   {% for message in messages %}
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        title: '{{ message.tags }}',
+                        text: '{{ message }}',
+                        icon: '{{ message.tags }}'
+                        
+                    });
+                  });
+                </script>
+      {% endfor %}
+      
+    {% endif %}
 </body>
 </html>
