@@ -59,7 +59,8 @@ Detail Livre
         <th>Code</th>
         <th>Disponibilite</th>
         <!--<th style="font-weight: bold;">code</th>-->
-        <th style="font-weight: bold;">action</th>
+        <th style="font-weight: bold;">Supprimer</th>
+        <th style="font-weight: bold;">Mis en horsPrêt</th>
        
         
       </tr>
@@ -73,6 +74,16 @@ Detail Livre
           <!--<i class="fa-solid fa-pen-to-square"></i>-->
          <a href="{% url 'supprimer_exemplaire' livre.id %}" ><i class="fa-solid fa-trash"></i></a>
         </td>
+        <td>
+         <div class="toggle-switch">
+        
+          
+          <a href="{% url 'mise_pret_horspret' exemplaire.id %}">
+            <input class="toggle-input" id="" type="checkbox" >
+            <label class="toggle-label" for="">    </label>
+            </a>
+        </div>
+      </td>
       </tr>
       {% endfor %}
       {% endif %}

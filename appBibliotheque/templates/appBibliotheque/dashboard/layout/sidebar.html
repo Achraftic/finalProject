@@ -14,15 +14,15 @@
       </li>
 
       <li>
-        <a href="{% url 'liste_demandes_emprunt' %}" {% if request.path == '/users_lists/'%} class="active"{% endif %}> <i class="fa-solid fa-sm fa-book"></i> Demande Empruntes</a>
+        <a href="{% url 'liste_demandes_emprunt' %}" {% if request.path == '/liste_demandes_emprunt/'%} class="active"{% endif %}> <i class="fa-solid fa-sm fa-layer-group"></i> Demande Empruntes</a>
       </li>
       <li>
-        <a href="#">
+        <a  href="{% url 'list_empruntes' %}" {% if request.path == '/list_empruntes/' %} class="active"{% endif %}>
          <i class="fa-solid fa-address-book  fa-sm"></i> Empruntes</a
         >
       </li>
       <li>
-        <a href="{% url 'users_lists' %}" {% if request.path == '/users_lists/'%} class="active"{% endif %}> <i class="fa-solid fa-sm fa-book"></i> Users</a>
+        <a href="{% url 'users_lists' %}" {% if request.path == '/users_lists/'%} class="active"{% endif %}> <i class="fa-solid fa-sm fa-users"></i> Users</a>
       </li>
       <li>
         <a href="{% url 'liste_livres' %}" {% if request.path == '/liste_livres/' or '/detailLivre' in request.path or 'page_ajout' in request.path  or '/ajouter_livre' in request.path  or '/edit_livre' in request.path   %} class="active"{% endif %}> <i class="fa-solid fa-sm fa-book"></i> Livres</a>
@@ -31,9 +31,13 @@
     </ul>
     <ul class="listDash2">
       <li>
+        <a href="{% url 'home' %}">
+          <i class="fa-solid fa-home fa-sm"></i> Home
+        </a>
         <a href="{% url 'logout_user' %}">
-          <i class="fa-solid fa-right-to-bracket fa-sm"></i> Logout</a
-        >
+          <i class="fa-solid fa-right-to-bracket fa-sm"></i> Logout
+        </a>
+       
       </li>
       <!-- <li>
         <a href="#"> <i class="fa-solid fa-gear fa-sm"></i> Setting</a>

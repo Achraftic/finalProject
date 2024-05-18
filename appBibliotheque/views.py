@@ -233,6 +233,8 @@ def liste_demandes_emprunt(request):
 
 def accepter_demande_emprunt(request, id):
     demande = get_object_or_404(DemandeEmprunt, pk=id)
+    print(demande.exemplaire)
+    
     exemplaire = Exemplaire.objects.get(id=demande.exemplaire.id, disponible=True)
         
     utilisateur = demande.utilisateur
@@ -250,8 +252,10 @@ def accepter_demande_emprunt(request, id):
         # Marquer la demande comme acceptée
         demande.acceptee = True
         demande.save()
+        demande.delete()
         messages.success(request, 'La demande d\'emprunt a été acceptée avec succès.')
 
+    
     # Rediriger vers la liste des demandes d'emprunt
     return redirect('liste_demandes_emprunt')
 
@@ -266,3 +270,30 @@ def refuser_demande_emprunt(request, id):
     
     # Rediriger vers la liste des demandes d'emprunt après avoir refusé
     return redirect('liste_demandes_emprunt')
+def list_exemplaire_empruntes(request):
+    
+    emprunts = Emprunter.objects.all()
+    return render(request,'appBibliotheque/dashboard/empruntes.html',{'emprunts' : emprunts })
+def rendre_exemplaire(request, id):
+    emprunt = get_object_or_404(Emprunter, id=id)
+    exemplaire=emprunt.exemplaire
+    exemplaire.disponible = True
+    exemplaire.save()
+    emprunt.delete()
+   
+    messages.success(request,"L\'exemplaire est en état prêt maintenant")
+   
+    
+    return redirect('list_empruntes')
+
+
+def mise_pret_horspret(request, id):
+    exemplaire = get_object_or_404(Exemplaire, id=id)
+    
+    if exemplaire.disponible:
+        exemplaire.disponible = False
+        exemplaire.save()
+    
+    # Rediriger vers le dernier chemin d'accès enregistré dans les données de session
+    return redirect(request.META.get('HTTP_REFERER', 'detailLivre'))
+    

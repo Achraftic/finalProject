@@ -1,8 +1,8 @@
 
 from django.contrib import admin
 from django.urls import path
-from appBibliotheque.views import home,rechercher_livre,detail_livre,ajouter_livre,ajouter_exemplaire,page_UnLivre,filterLivre,edit_livre,liste_demandes_emprunt
-from appBibliotheque.views import emprunter_exemplaire,liste_livres,page_ajout,supprimer_exemplaire,detailLivre,dashboard,update_livre,demande_emprunt,refuser_demande_emprunt,accepter_demande_emprunt
+from appBibliotheque.views import home,rechercher_livre,detail_livre,ajouter_livre,ajouter_exemplaire,page_UnLivre,filterLivre,edit_livre,liste_demandes_emprunt,rendre_exemplaire,mise_pret_horspret
+from appBibliotheque.views import emprunter_exemplaire,liste_livres,page_ajout,supprimer_exemplaire,detailLivre,dashboard,update_livre,demande_emprunt,refuser_demande_emprunt,accepter_demande_emprunt,list_exemplaire_empruntes
 # from appBibliotheque.views import categorie_math,categorie_Roman,categorie_Physique,categorie_Sport,categorie_Social,categorie_culture
 from accounts.views import register,signup,pagelogin,login_user,logout_user,users_lists,delete_user
 from django.conf.urls.static import static
@@ -33,7 +33,11 @@ urlpatterns = [
     path('dashboard/',dashboard,name="dashboard"),
     path('demande_emprunt/<int:id>/',demande_emprunt,name="demande_emprunt"),
     path('liste_demandes_emprunt/',liste_demandes_emprunt,name="liste_demandes_emprunt"),
+    path('list_empruntes/',list_exemplaire_empruntes,name="list_empruntes"),
     path('refuser_demande_emprunt/<int:id>',refuser_demande_emprunt,name="refuser_demande_emprunt"),
-    path('accepter_demande_emprunt/<int:id>',accepter_demande_emprunt,name="accepter_demande_emprunt")
+    path('accepter_demande_emprunt/<int:id>',accepter_demande_emprunt,name="accepter_demande_emprunt"),
+    path('rendre_exemplaire/<int:id>',rendre_exemplaire,name="rendre_exemplaire"),
+    path('mise_pret_horspret/<int:id>',mise_pret_horspret,name="mise_pret_horspret"),
+
     
 ] + static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

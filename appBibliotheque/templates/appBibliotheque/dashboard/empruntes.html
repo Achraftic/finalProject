@@ -1,0 +1,73 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block header %}
+Liste Emprunt
+{% endblock %}
+
+{% block content %}
+{% if emprunts %}
+
+<div style="overflow-x:auto;">
+   <table>
+     <tr>
+       <th>Id Livre</th>
+       <th>Id Empruntes</th>
+       <th>ISBN</th>
+       <th>titre</th>
+       <th>date Emprunte</th>
+      
+       <th>id exemplaire</th>
+       <th>user</th>
+       <th>Retournez livre</th>
+     </tr>
+     {% for emprunt in emprunts %}
+     <tr>
+       <td>{{emprunt.exemplaire.livre_id}}</td>
+       <td>{{emprunt.id}}</td>
+       <td>{{emprunt.exemplaire.livre.isbn}}</td>
+       <td>  {{ emprunt.exemplaire.livre.titre|slice:":15" }}...</td>
+       <td>{{emprunt.date_emprunt}}</td>
+       <td>{{emprunt.exemplaire.id}}</td>
+       <td>{{emprunt.utilisateur.username}}</td>
+    
+       
+       <td class="action">
+         <a href="{% url 'rendre_exemplaire' emprunt.id  %}"><i class="fa fa-square-check"></i></a>
+       </td>
+     </tr>
+     {% endfor %}
+   </table>
+ </div> 
+
+ <script>
+ 
+     
+
+    
+      function confirmDelete(bookId) {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: 'You won\'t be able to revert this!',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+          if (result.isConfirmed) {
+              // If the user confirms the deletion, navigate to the delete URL
+            
+              window.location.href = window.location.origin + "/supprimer_exemplaire/" + bookId;
+
+          }
+      });
+      }
+           
+          
+  
+  
+</script>
+
+{% endif %}
+{% endblock %}
