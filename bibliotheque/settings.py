@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
     'appBibliotheque',
     'accounts',
 ]
@@ -111,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Casablanca'
 
 USE_I18N = True
 
@@ -141,3 +142,5 @@ EMAIL_USE_TLS = True
 # Adresse e-mail et mot de passe de votre compte Gmail
 EMAIL_HOST_USER = 'dy5155414@gmail.com'
 EMAIL_HOST_PASSWORD = 'diabate1234@'
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'

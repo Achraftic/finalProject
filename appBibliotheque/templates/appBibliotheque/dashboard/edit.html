@@ -8,25 +8,24 @@ Edit Livre
 
 {% block content %}
 
-<form action="{% url 'ajouter_livre' %}" method="post" enctype="multipart/form-data" >
+<form action="{% url 'update_livre' livre.id %}" method="post" enctype="multipart/form-data" >
   {% csrf_token %}
   <div class="inputs">
-      <input name="titre" class="input" placeholder="Nom Livre" value="{{livre.titre}}" >
-      <input name="isbn" class="input" placeholder="ISBN" value="{{livre.isbn}}">
-      <input name="auteur" class="input" placeholder="auteur" value="{{livre.auteur}}">
-      <input name="categories" class="input" placeholder="Categories" value="{{livre.categories}}">
-     <!-- <input type="number" class="input" placeholder="Nb Exemplaire"> -->
+      <input name="titre" class="input" placeholder="Nom Livre" value="{{ livre.titre }}" >
+      <input name="isbn" class="input" placeholder="ISBN" value="{{ livre.isbn }}">
+      <input name="auteur" class="input" placeholder="auteur" value="{{ livre.auteur }}">
+      <input name="categories" class="input" placeholder="Categories" value="{{ livre.categories }}">
+  
     </div>
   
     <div class="field">
 
-     <textarea name="description" class="input" id="" cols="100" rows="10"   placeholder="Description">{{livre.description}}
-            
+     <textarea name="description" class="input" id="" cols="100" rows="10"   placeholder="Description">{{ livre.description }}</textarea>
       
-     </textarea>
     </div>
     <div class="img_ajouter">
-        <img id="imgprv" src="{{livre.image_couverture.url}}" alt="{{livre.titre}}" />
+        <img id="imgprv" src="{{ livre.image_couverture.url }}" alt="{{ livre.titre }}" />
+        
       </div>
     <label class="custum-file-upload" for="file">
       <div class="icon">
@@ -36,6 +35,8 @@ Edit Livre
          <span id="filename">Click to upload image</span>
          </div>
          <input type="file" name="image_couverture" id="file" onchange="previewImage(event)">
+        <input type="hidden" name="current_image_url" value="{{ livre.image_couverture.url }}">
+
       </label>
      
       
@@ -53,20 +54,23 @@ Edit Livre
           document.getElementById("imgprv").src = e.target.result;
         };
         reader.readAsDataURL(file);
+        document.getElementById("filename").textContent = file.name;
       }
     }
     window.onload = function () {
-        // Pre-populate file input with the current image URL
-        const imageURL = "{% static 'img/3afb3c491fbec34c7419f1264faf414b.jpg' %}";
-        document.getElementById("file").value = imageURL;
+        const imageURL = "{{ livre.image_couverture.url }}";
+        document.getElementById("imgprv").src = imageURL;
+        const fileInput = document.getElementById("file");
+        
+        fileInput.addEventListener("change", function() {
+            const currentImageURL = "{{ livre.image_couverture.url }}";
+            if (currentImageURL) {
+                document.getElementById("imgprv").src = currentImageURL;
+            }
+        });
       };
-      
+ 
 
   </script>
-{% if messages %}
-{% for message in messages %}
-{{message}}
-{% endfor %}
-{% endif %}
-{% endblock %}
 
+{% endblock %}

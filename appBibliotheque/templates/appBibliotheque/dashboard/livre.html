@@ -29,19 +29,50 @@ Liste Livres
        <td>{{livre.titre}}</td>
        <td>{{livre.auteur}}</td>
        <td>{{ livre.get_NbrExemple }}</td>
-       {% if livre.exemplaires_livre.count > 1 %}
+       {% if livre.exemplaires_livre.count > 0 %}
        <td class="etat"> <span class="true">true</span></td>
        {% else %}
        <td class="etat"> <span class="false">false</span>    </td>
        {% endif %}
        <td class="action">
          <a href="{% url 'ajouter_exemplaire' livre.id %}"><i class="fa-solid fa-pen-to-square"></i></a>
-         <a href="{% url 'supprimer_exemplaire' livre.id %}"><i class="fa-solid fa-trash"></i></a>
+         <a href="#" onclick="confirmDelete('{{ livre.id }}')"><i class="fa-solid fa-trash deleteButton"></i></a>
+
          <a href="{% url 'detailLivre' livre.id %}"> <i class="fa-solid fa-eye"></i></a>
        </td>
      </tr>
      {% endfor %}
    </table>
  </div> 
+
+ <script>
+ 
+     
+
+    
+      function confirmDelete(bookId) {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: 'You won\'t be able to revert this!',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+          if (result.isConfirmed) {
+              // If the user confirms the deletion, navigate to the delete URL
+            
+              window.location.href = window.location.origin + "/supprimer_exemplaire/" + bookId;
+
+          }
+      });
+      }
+           
+          
+  
+  
+</script>
+
 {% endif %}
 {% endblock %}
