@@ -28,7 +28,7 @@
             <li>{{livre_detail.auteur}}</li>
             <li> {{livre_detail.isbn}}</li>
             <li>{{livre_detail.get_NbrExemple}}</li>
-            {% if livre_detail.exemplaires_livre.count > 1 %}
+            {% if livre_detail.exemplaires_livre.count > 0 %}
             <li>Disponible</li>
             {% else %}
             <li>Non Disponible</li>

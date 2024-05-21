@@ -1,12 +1,16 @@
 from django.shortcuts import render
+from random import randint
 from django.contrib.auth import get_user_model,login,logout,authenticate
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.models import User
 from .models import Utilisateur
+from django.contrib.auth.hashers import make_password
+from django.core.mail import BadHeaderError,send_mail
 from django.contrib import messages
 from django.contrib.auth.forms import PasswordResetForm
 from urllib.parse import unquote
+
 User = get_user_model()
 
 def register(request):
@@ -38,23 +42,25 @@ def signup(request):
 
     # Si la méthode de la requête n'est pas POST, afficher le formulaire vide
     return render(request, 'accounts/register.html')
+
 def pagelogin(request):
     return render(request,'accounts/login.html')
 def login_user(request):
-    error=""
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
 
         user = authenticate(username=username, password=password)
-        if user is not None :
-            
+        if user is not None:
             login(request, user)
-            return redirect('home')
+            is_admin = Utilisateur.objects.filter(username=username, est_bibliothecaire=True).exists()
+            if is_admin:
+                return redirect('dashboard')
+            else:
+                return redirect('home')
         else:
-            # Gérer le cas où l'authentification échoue
-            error ='Invalid username or password'
-            return render(request, 'accounts/login.html', {'error': error })
+            error = 'Invalid username or password'
+            return render(request, 'accounts/login.html', {'error': error})
 
     return render(request, 'accounts/login.html')
 def logout_user(request):#champs à definir
@@ -62,8 +68,16 @@ def logout_user(request):#champs à definir
     return redirect('home')
 
 def users_lists(request):
-    users = Utilisateur.objects.all()
-    return render(request,'appBibliotheque/dashboard/users.html',{'users' : users })
+    query = request.GET.get('nom')
+    message = ""
+    allUsers = Utilisateur.objects.filter(est_bibliothecaire=False)
+
+    if query:
+        allUsers = allUsers.filter(username__icontains=query)
+        if not allUsers.exists():
+            message = "Aucun utilisateur trouvé."
+
+    return render(request, 'appBibliotheque/dashboard/users.html', {'users': allUsers, 'query': query, 'message': message})
 
 
 def delete_user(request,username):
@@ -75,3 +89,31 @@ def delete_user(request,username):
         messages.success(request,"le utilasteur est supprime avec succès")
     return redirect('users_lists')
         
+def forget_password_view(request):
+    if request.method == 'POST' :
+        
+        email = request.POST.get('email')
+        user = Utilisateur.objects.filter(email=email).first()
+        print(user)
+        if user :
+            new_password = f"{user.username}{randint(0, 1000)}"
+            user.password = make_password(new_password)
+            user.save()
+            dest_mail = user.email
+            message = f"Mr. {user.username} Voici votre nouveau mot de passe:{new_password}. Merci!"
+            admin_mail="alykeita295@gmail.com"
+            subject ="Envoi de password"
+            
+            try:
+                send_mail(subject, message, admin_mail, [dest_mail])
+                print("Email sent successfully")
+                messages.success(request,"Veuillez vérifier votre email...") 
+                return redirect("login")
+            except Exception as e:
+                print(f"Failed to send email")
+       
+        messages.success(request,"Cet email ne correspond pas à un compte..") 
+        return redirect("forgot_password")
+    return render(request,"accounts/forget_password.html")
+            
+    

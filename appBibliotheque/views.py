@@ -1,58 +1,34 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from appBibliotheque.models import Livre,Emprunter,Exemplaire,DemandeEmprunt
 from django.contrib import messages
+from django.core.mail import BadHeaderError,send_mail
+from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator 
 from accounts.models import Utilisateur
 
-def home(request):
-    livres = Livre.objects.order_by('id')
-    paginator = Paginator(livres, 6) 
+def get_paginated_books(request, livres):
+    paginator = Paginator(livres, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request,'appBibliotheque/user/home.html',{'page_obj' : page_obj })
-# @login_required
+    return page_obj
+
+def home(request):
+    livres = Livre.objects.order_by('id')
+    page_obj = get_paginated_books(request, livres)
+    return render(request, 'appBibliotheque/user/home.html', {'page_obj': page_obj})
+
 def rechercher_livre(request):
     query = request.GET.get('titre')
-    livres = []
-    message=""
-    if query:
-        livres = Livre.objects.filter(titre__icontains=query)
-        paginator = Paginator(livres, 6)
-        page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
-    else:
-        message = "No search query provided."
+    livres = Livre.objects.filter(titre__icontains=query) if query else []
+    page_obj = get_paginated_books(request, livres)
+    message = "No search query provided." if not query else ""
+    return render(request, 'appBibliotheque/user/home.html', {'page_obj': page_obj, 'query': query, 'message': message})  
 
-    return render(request, 'appBibliotheque/user/home.html', {'page_obj': page_obj if query else None, 'query': query, 'message': message})
-      
 def detail_livre(request,slug):
     livre = get_object_or_404(Livre,slug=slug)
     return render(request,'appBibliotheque/user/unLivre.html',{"livre_detail":livre})
 
-# def emprunter_exemplaire(request, slug):
-#     livre = get_object_or_404(Livre, slug=slug)
-#     message = ""
-#     # Vérifier si l'utilisateur a déjà emprunté ce livre
-#     utilisateur = request.user 
-#     if Emprunter.objects.filter(utilisateur=utilisateur, exemplaire__livre=livre).exists():
-#         message = f"Vous avez déjà emprunté le livre '{livre.titre}'."
-#     else:
-#         # Vérifier si des exemplaires sont disponibles
-#         exemplaires_disponibles = Exemplaire.objects.filter(livre=livre, disponible=True)
-#         if exemplaires_disponibles.exists():
-#             exemplaire = exemplaires_disponibles.first()
-#             # Créer un nouvel emprunt
-#             emprunt = Emprunter.objects.create(exemplaire=exemplaire, utilisateur=utilisateur)
-#             emprunt.save()
-#             # Mettre à jour la disponibilité de l'exemplaire
-#             exemplaire.disponible = False
-#             exemplaire.save()
-#             message = f"L'exemplaire du livre '{livre.titre}' a été emprunté avec succès."
-#         else:
-#             message = f"Aucun exemplaire disponible pour le livre '{livre.titre}'."
-    
-#     return render(request, 'appBibliotheque/user/home.html', {'livre': livre, 'message': message})
 
 def emprunter_exemplaire(request, slug):
     livre = get_object_or_404(Livre, slug=slug)
@@ -80,9 +56,18 @@ def emprunter_exemplaire(request, slug):
 
 
 def liste_livres(request):
-    livres = Livre.objects.all()
-    
-    return render(request,'appBibliotheque/dashboard/livre.html',{'livres' : livres })
+   
+    query = request.GET.get('nom')
+    message=""
+    if query:
+        livres = Livre.objects.filter(titre__icontains=query)
+        
+        if not livres :
+            message = "Aucun livre trouvé ."
+    else:
+        livres = Livre.objects.all()
+    page_obj = get_paginated_books(request, livres)
+    return render(request,'appBibliotheque/dashboard/livre.html',{'livres' : livres ,'page_obj':page_obj,'message': message,query:"query"})
 
 def page_ajout(request):
     return render(request, 'appBibliotheque/dashboard/ajouter.html')
@@ -171,10 +156,7 @@ def filterLivre(request,genre):
          livres = Livre.objects.order_by('id')
     else:
        livres = Livre.objects.order_by('id').filter(categories__icontains=genre)
-    
-    paginator = Paginator(livres, 6)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    page_obj = get_paginated_books(request, livres)
    
     return render(request,'appBibliotheque/user/home.html', {'genre': genre, 'page_obj': page_obj}) 
 
@@ -226,7 +208,7 @@ def demande_emprunt(request, id):
 
 def liste_demandes_emprunt(request):
     # Récupérer toutes les demandes d'emprunt
-    demandes = DemandeEmprunt.objects.all()
+    demandes = DemandeEmprunt.objects.all().order_by("date_demande")
     
     return render(request, 'appBibliotheque/dashboard/demande_Empruntes.html',
                   {'demandes': demandes})
@@ -254,7 +236,23 @@ def accepter_demande_emprunt(request, id):
         demande.save()
         demande.delete()
         messages.success(request, 'La demande d\'emprunt a été acceptée avec succès.')
-
+        
+        dest_mail = utilisateur.email
+        message = f"Mr. {utilisateur.username} votre demande a été acceptée vous avez 48h pour récuperer votre exemplaire. Merci!"
+        admin_mail="alykeita295@gmail.com"
+        subject ="Demande Accepte"
+        # send_mail(subject,message,admin_mail,[dest_mail])
+        
+        try:
+         send_mail(subject, message, admin_mail, [dest_mail])
+         print("Email sent successfully")
+        except Exception as e:
+         print(f"Failed to send email")
+        """ 
+        send mail
+        
+        
+        """
     
     # Rediriger vers la liste des demandes d'emprunt
     return redirect('liste_demandes_emprunt')
@@ -271,9 +269,23 @@ def refuser_demande_emprunt(request, id):
     # Rediriger vers la liste des demandes d'emprunt après avoir refusé
     return redirect('liste_demandes_emprunt')
 def list_exemplaire_empruntes(request):
+    query = request.GET.get('nom')
+    message = ""
     
-    emprunts = Emprunter.objects.all()
-    return render(request,'appBibliotheque/dashboard/empruntes.html',{'emprunts' : emprunts })
+    if query:
+        livres = Livre.objects.filter(titre__icontains=query)
+        exemplaires = Exemplaire.objects.filter(livre__in=livres)
+        emprunts = Emprunter.objects.filter(exemplaire__in=exemplaires)
+        
+        if not emprunts.exists():
+            message = "Aucun emprunt trouvé."
+    else:
+        emprunts = Emprunter.objects.all()
+        
+    return render(request, 'appBibliotheque/dashboard/empruntes.html', {'emprunts': emprunts, 'message': message,query:"query"})
+    
+
+
 def rendre_exemplaire(request, id):
     emprunt = get_object_or_404(Emprunter, id=id)
     exemplaire=emprunt.exemplaire
@@ -297,3 +309,12 @@ def mise_pret_horspret(request, id):
     # Rediriger vers le dernier chemin d'accès enregistré dans les données de session
     return redirect(request.META.get('HTTP_REFERER', 'detailLivre'))
     
+    
+
+
+
+   
+
+      
+
+

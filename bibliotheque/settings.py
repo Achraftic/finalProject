@@ -132,15 +132,16 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 AUTH_USER_MODEL = "accounts.Utilisateur"
 
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Configuration pour l'envoi d'e-mails via un serveur SMTP (par exemple, Gmail)
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.gmail.com' 
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # Adresse e-mail et mot de passe de votre compte Gmail
-EMAIL_HOST_USER = 'dy5155414@gmail.com'
-EMAIL_HOST_PASSWORD = 'diabate1234@'
+EMAIL_HOST_USER = 'alykeita295@gmail.com'
+EMAIL_HOST_PASSWORD = 'mcwi eeqj llvy ougg'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'

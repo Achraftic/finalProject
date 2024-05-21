@@ -53,6 +53,7 @@ Detail Livre
   
    </div>
    </div>
+   {% if exemplaires %}
   <div style="overflow-x:auto;">
     <table>
       <tr>
@@ -64,7 +65,7 @@ Detail Livre
        
         
       </tr>
-     {% if exemplaires %}
+     
      {% for exemplaire in exemplaires %}
       <tr>
         <td>{{exemplaire.id}}</td>
@@ -86,9 +87,12 @@ Detail Livre
       </td>
       </tr>
       {% endfor %}
-      {% endif %}
+      
 
     </table>
   </div>
+ 
+  {% endif %}
+
 </div>
 {% endblock %}
