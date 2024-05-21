@@ -154,11 +154,14 @@ position: relative;
     box-shadow: 0 10px 10px rgba(128, 128, 128, 0.121);
 }
 
-.search_container svg {
+.search_container button {
     position: absolute;
-    top: 12px;
-    right: 5;
+    top: 30px;
+    right: 24px;
     width: 14px;
+    background: none;
+    border: none;
+
 }
 
 /* fin header */

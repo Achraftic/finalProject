@@ -13,6 +13,9 @@ Liste Users
 
  <div class="content">  
  <div style="overflow-x:auto;">
+ 
+    
+
    <table>
      <tr>
        <th>Usernames</th>
@@ -42,10 +45,16 @@ Liste Users
      </tr>
      {% endfor %}
    </table>
- </div>    
-{% endif %} 
+   {% else %}
+   
+    <p class="error_msg"> {{message}} </p>
+      
+  
+  </div>    
+  
 </div>
 </div>
+{% endif %}
 <script>
   function confirmDelete(username) {
       Swal.fire({

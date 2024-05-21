@@ -13,7 +13,7 @@
 
             <input type="text" name="username"  class="email inputform" placeholder="email">
             <input type="password" name="password" class="password inputform" placeholder="password">
-            <a>forget password</a>
+            <a href="{% url 'forgot_password' %}">forget password</a>
             <button class="btnform">Se Connecter</button>
         </form>
         <div class="imgcontainer">
@@ -22,4 +22,21 @@
     </div>
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% if messages %}
+{% for message in messages %}
+     <script>
+         document.addEventListener('DOMContentLoaded', function () {
+                 Swal.fire({
+                     title: '{{ message.tags }}',
+                     text: '{{ message }}',
+                     icon: '{{ message.tags }}'
+                     
+                 });
+               });
+             </script>
+   {% endfor %}
+   
+ {% endif %}
+
 {% endblock %}

@@ -4,7 +4,7 @@ from django.urls import path
 from appBibliotheque.views import home,rechercher_livre,detail_livre,ajouter_livre,ajouter_exemplaire,page_UnLivre,filterLivre,edit_livre,liste_demandes_emprunt,rendre_exemplaire,mise_pret_horspret
 from appBibliotheque.views import emprunter_exemplaire,liste_livres,page_ajout,supprimer_exemplaire,detailLivre,dashboard,update_livre,demande_emprunt,refuser_demande_emprunt,accepter_demande_emprunt,list_exemplaire_empruntes
 # from appBibliotheque.views import categorie_math,categorie_Roman,categorie_Physique,categorie_Sport,categorie_Social,categorie_culture
-from accounts.views import register,signup,pagelogin,login_user,logout_user,users_lists,delete_user
+from accounts.views import register,signup,pagelogin,login_user,logout_user,users_lists,delete_user,forget_password_view
 from django.conf.urls.static import static
 from django.conf import settings
 urlpatterns = [
@@ -14,6 +14,9 @@ urlpatterns = [
     path('genre/<str:genre>', filterLivre, name='filterLivre'),
     path('page_UnLivre/',page_UnLivre,name='page_UnLivre'),
     path('signup/',signup,name='signup'),
+    path('forgot_password/',forget_password_view,name='forgot_password'),
+    
+    
     path('logout_user/',logout_user,name='logout_user'),
     path('users_lists/',users_lists,name='users_lists'),
     path('delete_user/<slug:username>',delete_user,name='delete_user'),

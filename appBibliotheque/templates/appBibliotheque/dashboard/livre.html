@@ -22,7 +22,7 @@ Liste Livres
        <th>disppnible</th>
        <th>action</th>
      </tr>
-     {% for livre in livres %}
+     {% for livre in page_obj %}
      <tr>
        <td>{{livre.id}}</td>
        <td>{{livre.isbn}}</td>
@@ -43,6 +43,28 @@ Liste Livres
      </tr>
      {% endfor %}
    </table>
+   <div class="pagination" style="margin:20px auto; width:max-content">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a class="paginateflesh" href="?page={{ page_obj.previous_page_number }}"> <i class="fa-solid fa-chevron-left"></i>  précédente</a>
+        <a class="current">
+            Page {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+        </a>
+        <a class="paginateflesh" href="?page=1"> première <i class="fa-solid fa-chevron-right"></i></a>
+
+        {% endif %}
+
+      
+        {% if page_obj.has_next %}
+        <!-- <a  class="paginateflesh" href="?page={{ page_obj.paginator.num_pages }}"> <i class="fa-solid fa-chevron-left"></i> dernière </a> -->
+        <a class="current">
+            Page {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+        </a>
+        <a class="paginateflesh" href="?page={{ page_obj.next_page_number }}"> suivante <i class="fa-solid fa-chevron-right"></i></a>
+
+        {% endif %}
+    </span>
+</div>
  </div> 
 
  <script>
