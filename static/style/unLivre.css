@@ -1,18 +1,32 @@
 @import "./color.css";
+
+
 .flexContainer{
 display: flex;
-margin-top: 25px ;
-flex-wrap: wrap;
+text-transform: capitalize;
 align-items: center;
 justify-content: center;
 gap: 20px;
 position: relative;
+height:70vh ;
+max-width: max-content;
+margin: 20px auto;
+height: 80vh;
+min-height:80vh;
+
 color: var(--black);
 }
-h1{
-    border: none;
+.text h1{
+    font-size: 40px;
+    max-width: 500px;
+    margin: 15px 0;
 }
+.text >p{
+    min-width: 300px;
 
+    max-width: 700px;
+
+}
 
 .flexContainer .image{
     
@@ -26,7 +40,8 @@ width: max-content;
 .flexContainer .image img{
 
     /* max-width: 300px; */
-    width: 300px;
+    min-width: 300px;
+    max-width: 300px;
     box-shadow: 0 19px 12px 0px rgb(162, 162, 162);
 
 }
@@ -51,10 +66,19 @@ width: max-content;
     color: var(--black);
     border: none; 
     border-radius:23px;
+    margin-top: 20px 0;
 }
 .text .listinfo{
     display: flex;
+    flex-direction: column;
+    gap:10px
 
+}
+
+.flexContainer span{
+    display: inline;
+    font-size: 17px;
+    font-weight: bold;
 }
 .text .key {
     width: 100%;
@@ -206,7 +230,9 @@ justify-items: end;
      
     
     }
-   
+   .flexContainer{
+    flex-wrap: wrap;
+   }
 }
 
 

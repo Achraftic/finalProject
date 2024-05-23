@@ -145,3 +145,4 @@ EMAIL_HOST_USER = 'alykeita295@gmail.com'
 EMAIL_HOST_PASSWORD = 'mcwi eeqj llvy ougg'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+LOGIN_URL = '/pagelogin'

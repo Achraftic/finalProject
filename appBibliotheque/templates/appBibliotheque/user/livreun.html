@@ -1,0 +1,152 @@
+{% extends './base.html' %}
+{% load static  %}
+{% block content2 %}
+
+
+<a href="{% url 'home' %}" class="back"> <span><i class="fa-solid fa-angle-left"></i> </span><span>Retour</span></a>
+
+        <div class="flexContainer">
+        
+
+            <div class="image">
+              <img src="./img/poster1.jpg" alt="" />
+            </div>
+            <div class="text">
+              <h1>{{livre_detail.titre}}</h1>
+              <p> <span>description : </span> {{livre_detail.description}}</p>
+              <div class="listinfo">
+                    <p> <span> Auteur : </span> {{livre_detail.auteur}}</p>
+                    <p> <span> ISBN : </span> {{livre_detail.isbn}}</p>
+                    <!-- <p> <span> N : </span> {{livre_detail.get_NbrExemple}}</p> -->
+                    <p> <span> genre : </span> {{livre_detail.genre}}</p>
+                    <p> <span> Etat : </span>  {% if livre_detail.exemplaires_livre.count > 0 %}
+                       Disponible
+                        {% else %}
+                       Non Disponible
+                        {% endif %}
+    
+                    </p>
+                 
+
+              </div>
+           
+              <button type="submit "  onclick="window.dialog.showModal();">Emprunter</button>
+            </div>
+    
+        </div>
+
+
+<dialog id="dialog">
+	<form class="formEmprunte" action="">
+    <div>
+      <label for="Nom">Nom</label>
+      <input type="text" class="input" placeholder="Nom"  disabled value="Achraf">
+    </div>
+    <div>
+      <label for="Nom">Prenom</label>
+      <input type="text" class="input" placeholder="Nom"  disabled value="Achraf">
+    </div>
+    <div>
+      <label for="Nom">Livre</label>
+      <input type="text" class="input" placeholder="Nom"  disabled value="Nom Livre">
+    </div>
+    <div>
+      <label for="date_retour"> Date de retour Prevue</label>  
+      <input type="date" class="input"  placeholder="date_retour">
+    </div>
+ 
+     
+    
+      <button class="submit">Confirmer</button>
+    </form>
+	<button onclick="window.dialog.close();" aria-label="close" class="x">❌</button>
+</dialog>
+
+
+{% endblock %}
+<!-- 
+
+
+
+
+
+
+
+
+
+
+ -->
+<div class="flexContainer">
+
+
+  <div class="image">
+    <img src="{{livre_detail.image_couverture.url}}" alt="{{livre_detail.titre}}" />
+  </div>
+  <div class="text">
+
+    
+    <h1>{{livre_detail.titre}}</h1>
+    <p class="discription">
+      {{livre_detail.description}}
+    </p>
+    <div class="listinfo">
+      <ul class="key">
+          <li>Auteur </li>
+          <li>ISBN </li>
+          <li>Exemplaire </li>
+          <li>Etat</li>
+        </ul>
+        <ul class="value"> 
+          <li>{{livre_detail.auteur}}</li>
+          <li> {{livre_detail.isbn}}</li>
+          <li>{{livre_detail.get_NbrExemple}}</li>
+         
+
+        </ul>
+
+    </div>
+    {% if user.is_authenticated %}
+    <!-- type="submit "  onclick="window.dialog.showModal();" -->
+    {%if livre_detail.exemplaires_livre.count %}
+    <button ><a href="{% url 'demande_emprunt' livre_detail.id %}">Demander</a></button>
+    {% else %}
+    <button disabled  style="cursor: not-allowed;"><a  style="cursor: not-allowed;" href="">Demander</a></button>
+    {% endif %}
+
+
+    {% else %}
+
+    <button ><a href="{% url 'login' %}">Se connecter</a></button>
+    {% endif %}
+  </div>
+
+</div>
+<!-- Please ❤ this if you like it! - Follow Me https://codepen.io/designfenix -->
+
+<dialog id="dialog">
+<form class="formEmprunte" action="">
+<div>
+<label for="Nom">Nom</label>
+<input type="text" class="input" placeholder="Nom"  disabled value="Achraf">
+</div>
+<div>
+<label for="Nom">Prenom</label>
+<input type="text" class="input" placeholder="Nom"  disabled value="Achraf">
+</div>
+<div>
+<label for="Nom">Livre</label>
+<input type="text" class="input" placeholder="Nom"  disabled value="Nom Livre">
+</div>
+<div>
+<label for="date_retour"> Date de retour Prevue</label>  
+<input type="date" class="input"  placeholder="date_retour">
+</div>
+
+
+
+<button class="submit">Confirmer</button>
+</form>
+<button onclick="window.dialog.close();" aria-label="close" class="x">❌</button>
+</dialog>
+</div>
+</div>

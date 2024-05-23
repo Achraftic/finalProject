@@ -3,7 +3,7 @@
     <nav class="laptopNav">
         <h1>Logo</h1>
         <ul class="link">
-             <a class="" href="">
+             <a class="" href="{% url 'home' %}">
                 <li {% if request.path == '/' or 'genre' in request.path%} class="active"{% endif %}>Home</li>
             
             </a>

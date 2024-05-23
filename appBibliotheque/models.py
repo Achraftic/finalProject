@@ -24,6 +24,8 @@ class Livre(models.Model):
         if not self.slug:
             self.slug = self.isbn
         super().save(*args, **kwargs)
+    def is_disponible(livre_id):
+        return Exemplaire.objects.filter(livre_id=livre_id,disponible=True).exists()
 class Exemplaire(models.Model):
     id = models.AutoField(primary_key=True)
     livre = models.ForeignKey(Livre,on_delete=models.CASCADE,related_name='exemplaires_livre')
@@ -41,5 +43,6 @@ class DemandeEmprunt(models.Model):
     exemplaire = models.ForeignKey(Exemplaire, on_delete=models.CASCADE)
     utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
     date_demande = models.DateTimeField(auto_now_add=True)
+    date_retour = models.DateField(blank=True,null=True)
     acceptee = models.BooleanField(default=False)
 
