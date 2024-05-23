@@ -29,7 +29,7 @@ Liste Livres
        <td>{{livre.titre}}</td>
        <td>{{livre.auteur}}</td>
        <td>{{ livre.get_NbrExemple }}</td>
-       {% if livre.exemplaires_livre.count > 0 %}
+       {% if livre.is_disponible %}
        <td class="etat"> <span class="true">true</span></td>
        {% else %}
        <td class="etat"> <span class="false">false</span>    </td>

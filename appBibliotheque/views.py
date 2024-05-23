@@ -6,7 +6,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator 
 from accounts.models import Utilisateur
-
+from datetime import datetime
 def get_paginated_books(request, livres):
     paginator = Paginator(livres, 10)
     page_number = request.GET.get('page')
@@ -25,12 +25,14 @@ def rechercher_livre(request):
     message = "No search query provided." if not query else ""
     return render(request, 'appBibliotheque/user/home.html', {'page_obj': page_obj, 'query': query, 'message': message})  
 
+
 def detail_livre(request,slug):
     livre = get_object_or_404(Livre,slug=slug)
     return render(request,'appBibliotheque/user/unLivre.html',{"livre_detail":livre})
 
 
 def emprunter_exemplaire(request, slug):
+    
     livre = get_object_or_404(Livre, slug=slug)
     message = ""
     # Vérifier si l'utilisateur a déjà emprunté ce livre
@@ -55,12 +57,16 @@ def emprunter_exemplaire(request, slug):
     return render(request, 'appBibliotheque/user/home.html', {'livre': livre, 'message': message})
 
 
+
 def liste_livres(request):
    
     query = request.GET.get('nom')
+    
+   
     message=""
     if query:
         livres = Livre.objects.filter(titre__icontains=query)
+        
         
         if not livres :
             message = "Aucun livre trouvé ."
@@ -144,9 +150,11 @@ def ajouter_exemplaire(request, id):
 
 def detailLivre(request,id):
     livre = get_object_or_404(Livre,id=id)
+  
     exemplaires = Exemplaire.objects.filter(livre=livre)#disponible = True
     nbExemplaire=Exemplaire.objects.count();
-    return render(request,'appBibliotheque/dashboard/detailLivre.html',{'livre':livre,'exemplaires':exemplaires })
+
+    return render(request,'appBibliotheque/dashboard/detailLivre.html',{'livre':livre,'exemplaires':exemplaires})
 
 def page_UnLivre(request):
     return render(request,'appBibliotheque/user/unLivre.html')
@@ -175,37 +183,55 @@ def dashboard(request):
 
 
 
-def demande_emprunt(request, id):
-    utilisateur = request.user
-    try: 
-        exemplaire = Exemplaire.objects.filter(livre_id=id,disponible = True).first()
+def demande_emprunt(request):
+    if request.method == 'POST':
+        try:
+            utilisateur = request.user
+            id = request.POST.get("id")
+            exemplaire = Exemplaire.objects.filter(livre_id=id, disponible=True).first()
+            # print(Exemplaire.objects.filter(livre_id=id, disponible=True).query)
 
-        # Vérifier si l'exemplaire est disponible
-        if exemplaire and exemplaire.disponible:
-            demande_existante = DemandeEmprunt.objects.filter(exemplaire=exemplaire, 
-                                                              utilisateur=utilisateur,
-                                                              acceptee=False).exists()
-            if demande_existante:
-                
-                messages.warning(request, "Vous avez déjà une demande en cours pour cet exemplaire.")
-                return redirect("home") 
+            if exemplaire and exemplaire.disponible:
+                demande_existante = DemandeEmprunt.objects.filter(exemplaire=exemplaire, 
+                                                                  utilisateur=utilisateur,
+                                                                  acceptee=False).exists()
+                if demande_existante:
+                    messages.warning(request, "Vous avez déjà une demande en cours pour cet exemplaire.")
+                else:
+                    date_retour_str = request.POST.get('date_retour')
+                    try:
+                        date_retour = datetime.strptime(date_retour_str, '%Y-%m-%d')
+                        demande = DemandeEmprunt.objects.create(exemplaire=exemplaire, 
+                                                                utilisateur=utilisateur,
+                                                                date_retour=date_retour)
+                        demande.save()
+                        messages.success(request, "Le livre a été demandé avec succès.")
+                    except ValueError:
+                        messages.error(request, "Format de date invalide.")
             else:
-            # Créer une demande d'emprunt pour cet exemplaire et cet utilisateur
-                demande = DemandeEmprunt.objects.create(exemplaire=exemplaire, 
-                                                        utilisateur=utilisateur)
-                demande.save()
-                # return render(request, 'appBibliotheque/confirmation.html', 
-                #               {'demande': demande})
-                messages.success(request, "Le livre a été demande avec succès.")
-                return redirect("home")  
-        else:
-            
-            messages.warning(request, "Cet exemplaire n\'est pas disponible.")
-            return redirect("home") 
-    except:
-        return redirect('home')
+                messages.warning(request, "Cet exemplaire n'est pas disponible.")
+        except Exception as e:
+            print(e)
+            messages.error(request, f"Une erreur s'est produite : {e}")
+    return redirect("home")
+
+
+# def is_admin(user):
+#     return user.est_bibliothecaire
+
+	
+
     
 
+
+
+
+
+
+
+
+
+@login_required
 def liste_demandes_emprunt(request):
     # Récupérer toutes les demandes d'emprunt
     demandes = DemandeEmprunt.objects.all().order_by("date_demande")
@@ -226,7 +252,7 @@ def accepter_demande_emprunt(request, id):
         messages.warning(request, f"Vous avez déjà emprunté le livre '{livre.titre}'.")
     else:
         # Créer un nouvel emprunt
-        emprunt = Emprunter.objects.create(exemplaire=exemplaire, utilisateur=utilisateur)
+        emprunt = Emprunter.objects.create(exemplaire=exemplaire, utilisateur=utilisateur,date_retour=demande.date_retour)
         emprunt.save()
         # Mettre à jour la disponibilité de l'exemplaire
         exemplaire.disponible = False
@@ -280,7 +306,7 @@ def list_exemplaire_empruntes(request):
         if not emprunts.exists():
             message = "Aucun emprunt trouvé."
     else:
-        emprunts = Emprunter.objects.all()
+        emprunts = Emprunter.objects.all().order_by("date_retour")
         
     return render(request, 'appBibliotheque/dashboard/empruntes.html', {'emprunts': emprunts, 'message': message,query:"query"})
     
@@ -305,8 +331,17 @@ def mise_pret_horspret(request, id):
     if exemplaire.disponible:
         exemplaire.disponible = False
         exemplaire.save()
+        messages.success(request, "Exemplaire mis hors prêt avec succès.")
+    else:
+        # Check if the exemplaire is not currently borrowed
+        if not Emprunter.objects.filter(exemplaire=exemplaire).exists():
+            exemplaire.disponible = True
+            exemplaire.save()
+            messages.success(request, "Exemplaire remis en prêt avec succès.")
+        else:
+            messages.warning(request, "L'exemplaire est actuellement emprunté et ne peut pas être remis en prêt.")
     
-    # Rediriger vers le dernier chemin d'accès enregistré dans les données de session
+    # Redirect to the referring page or a default page if not available
     return redirect(request.META.get('HTTP_REFERER', 'detailLivre'))
     
     

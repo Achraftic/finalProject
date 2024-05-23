@@ -26,6 +26,7 @@ urlpatterns = [
     path('ajouter_livre/',ajouter_livre,name='ajouter_livre'),
     path('edit_livre/<int:id>',edit_livre,name='edit_livre'),
     path('update_livre/<int:id>',update_livre,name='update_livre'),
+    
     path('liste_livres/',liste_livres,name='liste_livres'),
     path('supprimer_exemplaire/<int:id>',supprimer_exemplaire,name='supprimer_exemplaire'),
     path('detail_livre/<slug:slug>',detail_livre,name='detail_livre'),
@@ -34,13 +35,14 @@ urlpatterns = [
     path('livre/<slug:slug>/emprunter_exemplaire',emprunter_exemplaire,name='emprunter_exemplaire'),
     path('login/',login_user,name='login'),
     path('dashboard/',dashboard,name="dashboard"),
-    path('demande_emprunt/<int:id>/',demande_emprunt,name="demande_emprunt"),
+    # path('demande_emprunt/<int:id>/',demande_emprunt,name="demande_emprunt"),
     path('liste_demandes_emprunt/',liste_demandes_emprunt,name="liste_demandes_emprunt"),
     path('list_empruntes/',list_exemplaire_empruntes,name="list_empruntes"),
     path('refuser_demande_emprunt/<int:id>',refuser_demande_emprunt,name="refuser_demande_emprunt"),
     path('accepter_demande_emprunt/<int:id>',accepter_demande_emprunt,name="accepter_demande_emprunt"),
     path('rendre_exemplaire/<int:id>',rendre_exemplaire,name="rendre_exemplaire"),
     path('mise_pret_horspret/<int:id>',mise_pret_horspret,name="mise_pret_horspret"),
-
+    
+    path('demande_emprunt/',demande_emprunt,name="demande_emprunt"),
     
 ] + static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

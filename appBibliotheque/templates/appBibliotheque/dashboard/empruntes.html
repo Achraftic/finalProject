@@ -12,7 +12,7 @@ Liste Emprunt
      <tr>
        <th>Id Livre</th>
        <th>Id Empruntes</th>
-       <th>ISBN</th>
+       <th>Date Retour</th>
        <th>titre</th>
        <th>date Emprunte</th>
       
@@ -24,7 +24,7 @@ Liste Emprunt
      <tr>
        <td>{{emprunt.exemplaire.livre_id}}</td>
        <td>{{emprunt.id}}</td>
-       <td>{{emprunt.exemplaire.livre.isbn}}</td>
+       <td>{{emprunt.date_retour}}</td>
        <td>  {{ emprunt.exemplaire.livre.titre|slice:":15" }}...</td>
        <td>{{emprunt.date_emprunt}}</td>
        <td>{{emprunt.exemplaire.id}}</td>

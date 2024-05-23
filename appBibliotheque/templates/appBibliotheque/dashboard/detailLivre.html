@@ -23,11 +23,11 @@ Detail Livre
       <p>Auteur : <span> {{livre.auteur}} </span> </p>
       <p>ISBN : <span> {{livre.isbn}} </span> </p>
       <p>nb Exemplaire : <span> {{ livre.get_NbrExemple}}</span> </p>
-      <p class="">etat : <span>{% if livre.exemplaires_livre.count > 1  %}disponsible{% else %}non disponsible{% endif %}</span> </p>
+      <p class="">etat : <span>{% if livre.is_disponible %}disponsible{% else %}non disponsible{% endif %}</span> </p>
       <p> Description : <span>{{livre.description}}</span></p>
       <div class="etatchange">
     <div class="toggle-switch">
-      {% if livre.exemplaires_livre.count > 1 %}
+      {% if livre.is_disponible %}
       <input class="toggle-input" id="toggle" type="checkbox"  checked >
       {% else %}
       <input class="toggle-input" id="toggle" type="checkbox"   >
