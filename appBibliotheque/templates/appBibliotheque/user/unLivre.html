@@ -19,8 +19,9 @@
                     <p> <span> ISBN : </span> {{livre_detail.isbn}}</p>
                     <!-- <p> <span> N : </span> {{livre_detail.get_NbrExemple}}</p> -->
                     <p> <span> genre : </span> {{livre_detail.categories}}</p>
-                    <p> <span> Etat : </span>  {% if livre.is_disponible  %}
-                       Disponible
+           
+                    <p> <span> Etat : </span>    {% if livre_detail.is_disponible %}
+                      Disponible
                         {% else %}
                        Non Disponible
                         {% endif %}
