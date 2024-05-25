@@ -6,12 +6,13 @@
     
 <div class="parentform">
     <div class="containerform">
-        <form method="post" action="{% url 'login' %}">
-            {% if error %}<center style="color:red">{{error}}</center>{% endif %}
+        <form method="post" action="{% url 'login' %}" onsubmit="return  validateForm()">
+            {% if error %}   <div class="errorblock" style="color: red; font-size:small" id="error-container">{{error}}</div>{% endif %}
+            <div class="errorblock" style="color: red; font-size:small" id="error-container"></div>  
             {% csrf_token %}
             <h1>connexion</h1>
 
-            <input type="text" name="username"  class="email inputform" placeholder="email">
+            <input type="text" name="username"  class="email inputform" placeholder="username">
             <input type="password" name="password" class="password inputform" placeholder="password">
             <a href="{% url 'forgot_password' %}">forget password</a>
             <button class="btnform">Se Connecter</button>
@@ -20,8 +21,43 @@
             <img src="{% static 'img/3afb3c491fbec34c7419f1264faf414b.jpg' %}" alt="">
         </div>
     </div>
-
+ 
+    <script>
+        function validateForm() {
+            const username = document.querySelector('input[name="username"]').value.trim();  
+            const password = document.querySelector('input[name="password"]').value.trim();
+    
+            let errorMessage = '';
+            if (!username) {
+                errorMessage = 'Le nom d\'utilisateur est requis.<br>';
+            } 
+    
+           
+    
+         
+          
+            if (!errorMessage && !password) { 
+                errorMessage = 'Le mot de passe est requis.<br>';
+            } 
+    
+        
+            const errorContainer = document.getElementById('error-container');
+            errorContainer.innerHTML = errorMessage;
+    
+            
+            return errorMessage === '';
+        }
+    </script>
 </div>
+
+
+
+
+
+
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 {% if messages %}
 {% for message in messages %}

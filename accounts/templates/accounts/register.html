@@ -1,29 +1,75 @@
-
 {% load static %}
 {% block content %}
     <link rel="stylesheet" href="{% static 'style/form.css' %}">
     <link rel="stylesheet" href="{% static 'style/global.css' %}">
- <div class="parentform">
- <div class="containerform">
-    <form method="POST" action="{% url 'signup' %}">
-         {% csrf_token %}
-        <h1>Inscription</h1>
-         <div class="inputNameEmail">
-             <input type="text" name="username"  class="name inputform"  placeholder="username"  required>
-             <input type="email" class="email inputform" name="email" placeholder="email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
-             <!-- <input type="file" class="image_user inputform" name="image_user" accept="image/*" placeholder="Image de profil"> -->
+    <div class="parentform">
+        <div class="containerform">
+            <form method="POST" action="{% url 'signup' %}" onsubmit="return validateForm()">
+                {% csrf_token %}
+                <h1>Inscription</h1>
+                <div class="errorblock" style="color: red; font-size:small" id="error-container"></div>  
+                <div class="inputNameEmail">
+                    <input type="text" name="username" class="name inputform" placeholder="username" >
+                    <input type="email" class="email inputform" name="email" placeholder="email"  pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+                    <!-- <input type="file" class="image_user inputform" name="image_user" accept="image/*" placeholder="Image de profil"> -->
+                </div>
+                <input type="password" class="password inputform" name="password" placeholder="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+=\[\]{};:.,<>?|\\]).{8,}" title="Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre, un caractère spécial et avoir une longueur minimale de 8 caractères." >
+                <input type="password" class="cpassword inputform" name="confirm_password" placeholder="confirmer le  password">
+                <a>forget password</a>
+                <button class="btnform" type="submit">s'inscrire</button>
+            </form>
+            <div class="imgcontainer">
+                <img src="{% static 'img/3afb3c491fbec34c7419f1264faf414b.jpg' %}" alt="">
+            </div>
         </div>
-        <input type="password" class="password inputform" name="password" placeholder="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+=\[\]{};:.,<>?|\\]).{8,}" title="Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre, un caractère spécial et avoir une longueur minimale de 8 caractères." required>
-        <input type="password" class="cpassword inputform" name="confirm_password" placeholder="confirmer le  password">
-        <a>forget password</a>
-        <button class="btnform" type="submit" >s'inscrire</button>
-    </form>
-    <div class="imgcontainer">
-        <img src = "{% static 'img/3afb3c491fbec34c7419f1264faf414b.jpg' %}" alt="">
     </div>
-</div>
-
-</div>
-</div>
-
+    <script>
+        function validateForm() {
+            const username = document.querySelector('input[name="username"]').value.trim();
+            const email = document.querySelector('input[name="email"]').value.trim();
+            const password = document.querySelector('input[name="password"]').value.trim();
+            const confirmPassword = document.querySelector('input[name="confirm_password"]').value.trim();
+    
+            let errorMessage = '';
+    
+            // Username validation
+            const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+            if (!username) {
+                errorMessage = 'Le nom d\'utilisateur est requis.<br>';
+            } else if (!usernameRegex.test(username)) {
+                errorMessage = 'Le nom d\'utilisateur doit comporter entre 3 et 20 caractères et peut uniquement contenir des lettres, des chiffres et des underscores.<br>';
+            }
+    
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!errorMessage && !email) { // Check if errorMessage is not set and email is empty
+                errorMessage = 'L\'adresse email est requise.<br>';
+            } else if (!errorMessage && !emailRegex.test(email)) { // Check if errorMessage is not set and email is invalid
+                errorMessage = 'Veuillez saisir une adresse email valide.<br>';
+            }
+    
+            // Password validation
+            const passwordRegex = /^(?=.*\d)(?=.*[a-zàáâãäåçèéêëìíîïñòóôõöùúûüýÿ])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/;
+            if (!errorMessage && !password) { // Check if errorMessage is not set and password is empty
+                errorMessage = 'Le mot de passe est requis.<br>';
+            } else if (!errorMessage && !passwordRegex.test(password)) { // Check if errorMessage is not set and password is invalid
+                errorMessage = 'Le mot de passe doit comporter au moins 8 caractères et inclure au moins une lettre minuscule, une lettre majuscule, un chiffre et un caractère spécial.<br>';
+            }
+    
+            // Confirm password validation
+            if (!errorMessage && !confirmPassword) { // Check if errorMessage is not set and confirmPassword is empty
+                errorMessage = 'Veuillez confirmer votre mot de passe.<br>';
+            } else if (!errorMessage && password !== confirmPassword) { // Check if errorMessage is not set and passwords do not match
+                errorMessage = 'Les mots de passe ne correspondent pas.<br>';
+            }
+    
+            // Display error message if any
+            const errorContainer = document.getElementById('error-container');
+            errorContainer.innerHTML = errorMessage;
+    
+            // Return true if no error, otherwise return false
+            return errorMessage === '';
+        }
+    </script>
+    
 {% endblock %}
