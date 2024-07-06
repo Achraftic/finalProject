@@ -132,12 +132,15 @@ position: relative;
 
 
 .search_container {
-    position: relative;
+    width:max-content;
+    padding:0;
+     display:block;
+     position:relative
 
 }
 
 .search_container input {
-    width: 200px;
+    width: 190px;
     padding: 10px 20px;
     border-radius: 10px;
     outline: none;
@@ -156,11 +159,10 @@ position: relative;
 
 .search_container button {
     position: absolute;
-    top: 30px;
-    right: 24px;
     width: 14px;
     background: none;
     border: none;
+    position: absolute; top:9px; right:6px
 
 }
 

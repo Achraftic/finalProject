@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bibliotheque</title>
+    <link rel="stylesheet" href ="{% static 'style/dashboard/ajouterEmprunt.css' %}" />
     <link rel="stylesheet" href="{% static 'style/global.css' %}" />
     <link rel="stylesheet" href="{% static 'style/dashboard/dashboard.css' %}" />
     <link rel="stylesheet" href="{% static 'style/dashboard/livre.css' %}" />
@@ -15,7 +16,10 @@
       href="{% static 'style/fontawesome-free-6.5.2-web/css/all.min.css' %}" />
 </head>
 <body>
+<style>
 
+
+</style>
     <div class="countainer">
         {% include './layout/sidebar.html' %} 
         <div class="main">
@@ -28,18 +32,16 @@
                 </h2>
               </div>
               <div class="right">
-                <form class="search_container" method="get" action="{{request.path}}">
-                  <input type="text" name="nom" class="search" value="{{ query|default:'' }}" placeholder="Search..">
+                <form class="search_container" method="get" action="{{request.path}}" >
+                  <input type="text" name="nom" class="search" value="{{ query|default:'' }}" placeholder="Search.." style="width: 100%;">
                   
-                  <button type="submit"  >
+                  <button type="submit">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="searchIcon">
                           <path fill="#bdbdbd" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
                       </svg>
                   </button>
-              </form>
-                <span>
-                  <img src="{% static 'img/2023MayFri.jpg' %}" alt="" />
-                </span>
+             </form>
+              
               </div>
             </div>
             
@@ -55,7 +57,7 @@
       </div>
       <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
  
-   
+  
     <script src="{% static 'js/sidebar.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
    {% if messages %}

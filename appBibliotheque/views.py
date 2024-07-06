@@ -57,7 +57,7 @@ def emprunter_exemplaire(request, slug):
     return render(request, 'appBibliotheque/user/home.html', {'livre': livre, 'message': message})
 
 
-
+@login_required
 def liste_livres(request):
    
     query = request.GET.get('nom')
@@ -344,7 +344,23 @@ def mise_pret_horspret(request, id):
     # Redirect to the referring page or a default page if not available
     return redirect(request.META.get('HTTP_REFERER', 'detailLivre'))
     
+def ajouterEmprunt(request):
+     query = request.GET.get('nom')
     
+   
+     message=""
+     if query:
+        livres = Livre.objects.filter(titre__icontains=query)
+        
+        
+        if not livres :
+            message = "Aucun livre trouvé ."
+     else:
+        livres = Livre.objects.all()
+     page_obj = get_paginated_books(request, livres)
+ 
+     return render(request, 'appBibliotheque/dashboard/ajouterEmprunt.html', {'livres': livres})
+
 
 
 

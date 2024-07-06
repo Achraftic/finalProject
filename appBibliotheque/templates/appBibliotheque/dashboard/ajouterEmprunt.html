@@ -1,0 +1,90 @@
+{% extends './base.html' %}
+
+{% load static  %}
+
+{% block header %}
+Ajouter Emprunt
+{% endblock %}
+
+{% block content %}
+
+<form action="{% url 'ajouter_livre' %}" method="post" enctype="multipart/form-data" >
+  {% csrf_token %}
+  <div class="inputs2">
+      <input name="nom" class="input" placeholder="Nom"  >
+      <input name="prenom" class="input" placeholder="prenom">
+      <input name="email" class="input" placeholder="email" >
+   
+  
+    </div>
+  
+   
+     
+      
+     
+      <div style="overflow-x:auto;">
+        <table>
+          <tr>
+            <th>Id</th>
+            <th>ISBN</th>
+            <th>Nom Livre</th>
+            <th>Auteur</th>
+            <th>nb exemplaire</th>
+            <th>disppnible</th>
+            <th>action</th>
+          </tr>
+          {% for livre in livres %}
+          <tr>
+            <td>{{livre.id}}</td>
+            <td>{{livre.isbn}}</td>
+            <td>{{livre.titre}}</td>
+            <td>{{livre.auteur}}</td>
+            <td>{{ livre.get_NbrExemple }}</td>
+            {% if livre.is_disponible %}
+            <td class="etat"> <span class="true">true</span></td>
+            {% else %}
+            <td class="etat"> <span class="false">false</span>    </td>
+            {% endif %}
+            <td class="action">
+                {% if livre.is_disponible %}
+                <input type="radio" name="${id}" id="">
+                {% else %}
+               
+                {% endif %}
+          
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+        <div class="pagination" style="margin:20px auto; width:max-content">
+         <span class="step-links">
+             {% if page_obj.has_previous %}
+             <a class="paginateflesh" href="?page={{ page_obj.previous_page_number }}"> <i class="fa-solid fa-chevron-left"></i>  précédente</a>
+             <a class="current">
+                 Page {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+             </a>
+             <a class="paginateflesh" href="?page=1"> première <i class="fa-solid fa-chevron-right"></i></a>
+     
+             {% endif %}
+     
+           
+             {% if page_obj.has_next %}
+             <!-- <a  class="paginateflesh" href="?page={{ page_obj.paginator.num_pages }}"> <i class="fa-solid fa-chevron-left"></i> dernière </a> -->
+             <a class="current">
+                 Page {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+             </a>
+             <a class="paginateflesh" href="?page={{ page_obj.next_page_number }}"> suivante <i class="fa-solid fa-chevron-right"></i></a>
+     
+             {% endif %}
+         </span>
+     </div>
+      </div> 
+      <div class="btn">
+        <button type="submit">Ajouter</button>
+
+      </div>
+     
+ </form>
+
+
+{% endblock %}

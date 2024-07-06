@@ -1,0 +1,54 @@
+.input {
+    border: 2px solid transparent;
+    
+    height: 2.5em;
+    padding: 1.3em 1em;
+    outline: none;
+    overflow: hidden;
+    background-color: #F3F3F3;
+    border-radius: 10px;
+    transition: all 0.5s;
+ 
+  }
+  
+  .input:hover,
+  .input:focus {
+    border: 1px solid #4A9DEC;
+    box-shadow: 0px 0px 0px 7px rgba(74, 158, 236, 0.062);
+    background-color: white;
+  }
+
+  form{
+display: flex;
+flex-direction: column;
+gap: 20px;
+
+
+padding: 20px;
+  }
+  input::placeholder{
+    text-transform: capitalize;
+  }
+ .inputs2 input{
+    flex: 1;
+    
+  }
+
+  .btn button{
+    padding: 10px 20px;
+    color: var(--white);
+    background-color: var(--blue);
+    border: none;
+    border-radius: 100px;
+    
+      }
+      .btn{
+        display: flex;
+        justify-content: end;
+      }
+      .inputs2{
+display: flex ;
+
+gap: 20px;
+flex-wrap: wrap;
+      }
